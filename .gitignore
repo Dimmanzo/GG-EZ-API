@@ -1,9 +1,20 @@
+# GitHub-related
+.github/
+
+# Python
+__pycache__/
+*.py[cod]
+
+# Node.js
+node_modules/
+
+# Environment variables
+env.py
+
+# Core dumps
 core.Microsoft*
 core.mongo*
 core.python*
-env.py
-__pycache__/
-*.py[cod]
-node_modules/
-.github/
+
+# Miscellaneous
 cloudinary_python.txt
