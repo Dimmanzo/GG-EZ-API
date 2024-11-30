@@ -1,4 +1,4 @@
-# **GG-EZ - Esports Event Tracker**
+**GG-EZ - Esports Event Tracker**
 
 [View live project here!](#)
 
