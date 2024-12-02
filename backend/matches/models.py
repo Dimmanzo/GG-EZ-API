@@ -17,5 +17,8 @@ class Match(models.Model):
     result = models.CharField(max_length=255, blank=True, null=True)
     status = models.CharField(max_length=20, choices=STATUS_CHOISES, default='upcoming')
 
+    class Meta:
+        verbose_name_plural = "Matches"
+
     def __str__(self):
         return f"{self.team1.name} vs {self.team2.name} ({self.status})"
