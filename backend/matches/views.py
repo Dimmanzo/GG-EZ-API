@@ -15,5 +15,5 @@ class MatchesView(APIView):
         else:
             matches = Match.objects.all().order_by('scheduled_time')
 
-        serializers = MatchSerializer(matches, many=True)
+        serializer = MatchSerializer(matches, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
