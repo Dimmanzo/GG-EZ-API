@@ -8,3 +8,12 @@ class Team(models.Model):
 
     def __str__(self):
         return self.name
+
+class Player(models.Model):
+    name = models.CharField(max_length=255)
+    role = models.CharField(max_length=255)
+    avatar = CloudinaryField('image', blank=True, null=True)
+    team = models.ForeignKey(Team, on_delete=models.CASCADE, related_name="players")
+
+    def __str__(self):
+        return self.name
