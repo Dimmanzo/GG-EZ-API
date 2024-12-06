@@ -31,21 +31,10 @@ class MatchCreateSerializer(serializers.ModelSerializer):
         model = Match
         fields = ['id', 'event', 'team1', 'team2', 'scheduled_time', 'status']
 
-class TeamSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Team
-        fields = ['id', 'name', 'description', 'logo']
-
-class EventSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Event
-        fields = ['id', 'name', 'description', 'start_date', 'end_date']
-
 class MatchDetailSerializer(serializers.ModelSerializer):
     team1 = TeamSerializer()
     team2 = TeamSerializer()
     event = EventSerializer()
-
     scheduled_time = serializers.SerializerMethodField()
 
     class Meta:
@@ -54,6 +43,16 @@ class MatchDetailSerializer(serializers.ModelSerializer):
             'id', 'event', 'team1', 'team2', 'scheduled_time',
             'result', 'status'
             ]
+
+    def update(self, instance, validated_data):
+        instance.scheduled_time = validated_data.get('scheduled_time', instance.scheduled_time)
+        instance.result = validated_data.get('result', instance.result)
+        instance.status = validated_data.get('status', instance.status)
+        instance.event = validated_data.get('event', instance.event)
+        instance.team1 = validated_data.get('team1', instance.team1)
+        instance.team2 = validated_data.get('team2', instance.team2)
+        instance.save()
+        return instance
 
     def get_scheduled_time(self, obj):
         return obj.scheduled_time.strftime('%Y-%m-%d %H:%M:%S')
