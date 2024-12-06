@@ -7,9 +7,9 @@ from events.serializers import EventSerializer
 
 
 class MatchSerializer(serializers.ModelSerializer):
-    event = EventSerializer()
-    team1 = TeamSerializer()
-    team2 = TeamSerializer()
+    event = serializers.PrimaryKeyRelatedField(queryset=Event.objects.all())
+    team1 = serializers.PrimaryKeyRelatedField(queryset=Team.objects.all())
+    team2 = serializers.PrimaryKeyRelatedField(queryset=Team.objects.all())
     scheduled_time = serializers.SerializerMethodField() 
 
     class Meta:
