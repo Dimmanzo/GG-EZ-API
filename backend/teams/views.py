@@ -1,20 +1,22 @@
-from rest_framework import generics
+from rest_framework import generics, permissions
 from .models import Team, Player
 from .serializers import TeamSerializer, PlayerSerializer
 
 
 # Team views
-class TeamsView(generics.ListAPIView):
+class TeamsView(generics.ListCreateAPIView):
     """
-    List all teams.
+    List all teams or create a new team.
     """
     queryset = Team.objects.all().order_by('name')
     serializer_class = TeamSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
 # Player views
-class PlayersView(generics.ListAPIView):
+class PlayersView(generics.ListCreateAPIView):
     """
-    List all players.
+    List all players or create a new player.
     """
     queryset = Player.objects.all().order_by('name')
     serializer_class = PlayerSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
