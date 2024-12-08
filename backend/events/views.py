@@ -22,8 +22,7 @@ class EventsView(generics.ListCreateAPIView):
     ]
 
     # Filter fields
-    filterset_fields = ['start_date', 'end_date']
-    search_fields = ['name', 'description']
+    search_fields = ['name', 'description', 'start_date', 'end_date']
     ordering_fields = ['start_date', 'end_date']
 
     def perform_create(self, serializer):

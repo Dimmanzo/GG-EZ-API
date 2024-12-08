@@ -1,9 +1,9 @@
-from rest_framework import generics, permissions
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework import generics, permissions, filters
 from .models import Team, Player
 from .serializers import TeamSerializer, PlayerSerializer
 
 
-# Team views
 class TeamsView(generics.ListCreateAPIView):
     """
     List all teams or create a new team.
@@ -11,6 +11,19 @@ class TeamsView(generics.ListCreateAPIView):
     queryset = Team.objects.all().order_by('name')
     serializer_class = TeamSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+    # Filtering, searching, ordering
+    filter_backends = [
+        DjangoFilterBackend,
+        filters.SearchFilter,
+        filters.OrderingFilter,
+    ]
+
+    # Searching
+    search_fields = ['name', 'description', 'players__name']
+
+    # Ordering
+    ordering_fields = ['name', 'description']
 
 class TeamDetailView(generics.RetrieveUpdateDestroyAPIView):
     """
@@ -20,7 +33,6 @@ class TeamDetailView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = TeamSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
-# Player views
 class PlayersView(generics.ListCreateAPIView):
     """
     List all players or create a new player.
@@ -28,6 +40,19 @@ class PlayersView(generics.ListCreateAPIView):
     queryset = Player.objects.all().order_by('name')
     serializer_class = PlayerSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+    # Filtering, searching, ordering
+    filter_backends = [
+        DjangoFilterBackend,
+        filters.SearchFilter,
+        filters.OrderingFilter,
+    ]
+
+    # Searching
+    search_fields = ['name', 'role', 'team__name']
+
+    # Ordering
+    ordering_fields = ['name', 'role']
 
 class PlayerDetailView(generics.RetrieveUpdateDestroyAPIView):
     """
