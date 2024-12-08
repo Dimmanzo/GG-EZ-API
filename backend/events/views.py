@@ -5,7 +5,7 @@ from .models import Event
 from .serializers import EventSerializer
 
 
-class EventListView(generics.ListCreateAPIView):
+class EventsView(generics.ListCreateAPIView):
     """
     List all events ordered by start date or create new events if logged in as admin.
     """
@@ -29,3 +29,16 @@ class EventListView(generics.ListCreateAPIView):
         if not self.request.user.is_staff:
             raise permissions.PermissionDenied("Only admins can create events.")
         serializer.save()
+
+class EventDetailView(generics.RetrieveAPIView):
+    """
+    Show details of a specific event by ID.
+    """
+    serializer_class = EventSerializer
+    queryset = Event.objects.all()
+
+    def get_object(self):
+        try:
+            return self.queryset.get(pk=self.kwargs['pk'])
+        except Event.DoesNotExist:
+            raise NotFound(detail="No event found with the given ID.", code=404)
