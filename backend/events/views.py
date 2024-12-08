@@ -53,7 +53,7 @@ class EventDetailView(generics.RetrieveUpdateDestroyAPIView):
                 status=status.HTTP_403_FORBIDDEN
             )
         obj.delete()
-        return Response({"detail": "Event deleted succesfully."}, status=status.HTTP_204_NO_CONTENT)
+        return Response({"detail": f"Event '{obj.name}' deleted successfully."}, status=status.HTTP_204_NO_CONTENT)
 
     def perform_create(self, serializer):
         if not self.request.user.is_staff:

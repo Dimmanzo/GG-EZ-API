@@ -18,11 +18,14 @@ from django.contrib import admin
 from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import path, include
+from teams.views import PlayersView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/matches/', include('matches.urls')),
     path('api/events/', include('events.urls')),
+    path('api/teams/', include('teams.urls')),
+    path('api/players/', PlayersView.as_view(), name='player-list'),
 ]
 
 if settings.DEBUG:
