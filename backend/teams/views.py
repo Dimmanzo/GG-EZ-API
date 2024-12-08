@@ -12,12 +12,13 @@ class TeamsView(generics.ListCreateAPIView):
     serializer_class = TeamSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
-class TeamDetailView(generics.RetrieveAPIView):
+class TeamDetailView(generics.RetrieveUpdateDestroyAPIView):
     """
     Show details of a specific team by ID.
     """
     queryset = Team.objects.all()
     serializer_class = TeamSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
 # Player views
 class PlayersView(generics.ListCreateAPIView):
@@ -28,9 +29,10 @@ class PlayersView(generics.ListCreateAPIView):
     serializer_class = PlayerSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
-class PlayerDetailView(generics.RetrieveAPIView):
+class PlayerDetailView(generics.RetrieveUpdateDestroyAPIView):
     """
     Show details of a specific player by ID.
     """
     queryset = Player.objects.all()
     serializer_class = PlayerSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
