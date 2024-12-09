@@ -1,20 +1,24 @@
-# GitHub-related
-.github/
-
 # Python
 __pycache__/
 *.py[cod]
 
-# Node.js
-node_modules/
+# Virtual Environment
+venv/
+env/
 
 # Environment variables
-env.py
+.env
 
-# Core dumps
-core.Microsoft*
-core.mongo*
-core.python*
+# Database
+*.sqlite3
+
+# Logs
+*.log
+
+# Django static and media files
+staticfiles/
+media/
 
 # Miscellaneous
-cloudinary_python.txt
+*.bak
+*.swp

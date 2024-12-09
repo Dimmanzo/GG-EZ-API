@@ -16,7 +16,7 @@ from pathlib import Path
 from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = Path(__file__).resolve().parent
 
 
 # Quick-start development settings - unsuitable for production
@@ -37,7 +37,7 @@ CORS_ALLOW_ALL_ORIGINS = True
 # CSRF Settings
 
 CSRF_TRUSTED_ORIGINS = [
-    'https://8000-dimmanzo-ggez-ke6tv8hhypy.ws.codeinstitute-ide.net'
+    'https://8000-dimmanzo-ggez-ke6tv8hhypy.ws.codeinstitute-ide.net',
     'https://gg-ez-9f4cfd523ff5.herokuapp.com',
 ]
 
