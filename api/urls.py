@@ -27,6 +27,7 @@ urlpatterns = [
     path('api/teams/', include('teams.urls')),
     path('api/players/', PlayersView.as_view(), name='player-list'),
     path('api/players/<int:pk>/', PlayerDetailView.as_view(), name='player-list'),
+    path('register/', include('users.urls')),
 ]
 
 if settings.DEBUG:

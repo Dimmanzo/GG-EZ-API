@@ -2,6 +2,7 @@ from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import generics, permissions, filters, status
 from rest_framework.exceptions import NotFound
 from rest_framework.response import Response
+from api.permissions import IsStaffOrReadOnly
 from .models import Event
 from .serializers import EventSerializer
 
@@ -12,7 +13,7 @@ class EventsView(generics.ListCreateAPIView):
     """
     serializer_class = EventSerializer
     queryset = Event.objects.all().order_by('start_date')
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    permission_classes = [IsStaffOrReadOnly]
 
     # Filtering, searching, ordering
     filter_backends = [
@@ -36,7 +37,7 @@ class EventDetailView(generics.RetrieveUpdateDestroyAPIView):
     """
     serializer_class = EventSerializer
     queryset = Event.objects.all()
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    permission_classes = [IsStaffOrReadOnly]
 
     def get_object(self):
         try:

@@ -2,7 +2,7 @@ from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import generics, filters, status, permissions
 from rest_framework.exceptions import NotFound
 from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticatedOrReadOnly
+from api.permissions import IsStaffOrReadOnly
 from .models import Match
 from .serializers import MatchSerializer, MatchDetailSerializer, MatchCreateSerializer
 
@@ -13,7 +13,7 @@ class MatchesView(generics.ListCreateAPIView):
     """
     serializer_class = MatchSerializer
     queryset = Match.objects.all().order_by('scheduled_time')
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    permission_classes = [IsStaffOrReadOnly]
 
     # Filtering, searching, ordering
     filter_backends = [
@@ -46,6 +46,7 @@ class MatchDetail(generics.RetrieveAPIView):
     """
     serializer_class = MatchDetailSerializer
     queryset = Match.objects.all()
+    permission_classes = [IsStaffOrReadOnly]
 
     def get_object(self):
         try:

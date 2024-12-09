@@ -57,6 +57,7 @@ INSTALLED_APPS = [
     'cloudinary',
     'cloudinary_storage',
 
+    'users',
     'events',
     'teams',
     'matches',
@@ -168,6 +169,9 @@ else:
     CLOUDINARY_STORAGE = {
         'CLOUDINARY_URL': config('CLOUDINARY_URL')
     }
+
+# Custom user model
+AUTH_USER_MODEL = 'users.CustomUser'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
