@@ -31,8 +31,9 @@ DEBUG = config('DEBUG', default=False, cast=bool)
 ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='').split(',') + ['.herokuapp.com']
 
 # CORS Settings
-CORS_ALLOW_ALL_ORIGINS = True
-CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOWED_ORIGINS = [
+    config('CLIENT_ORIGIN')
+]
 CSRF_TRUSTED_ORIGINS = [
     'https://8000-dimmanzo-ggez-ke6tv8hhypy.ws.codeinstitute-ide.net',
     'https://gg-ez-9f4cfd523ff5.herokuapp.com',
