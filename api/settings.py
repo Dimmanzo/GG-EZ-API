@@ -35,7 +35,7 @@ CORS_ALLOWED_ORIGINS = [
     config('CLIENT_ORIGIN')
 ]
 CSRF_TRUSTED_ORIGINS = [
-    'https://8000-dimmanzo-ggez-ke6tv8hhypy.ws.codeinstitute-ide.net',
+    config('CLIENT_ORIGIN'),
     'https://gg-ez-9f4cfd523ff5.herokuapp.com',
 ]
 
@@ -84,7 +84,7 @@ ROOT_URLCONF = 'api.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'frontend' / 'build'],
+        'DIRS': [os.path.join(BASE_DIR, 'staticfiles', 'build')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -144,10 +144,10 @@ else:
 # Static Files
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
-    BASE_DIR / 'static',
     BASE_DIR / 'frontend' / 'build' / 'static',
 ]
 STATIC_ROOT = BASE_DIR / 'staticfiles'
+WHITENOISE_ROOT = BASE_DIR / 'staticfiles' / 'build'
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Media Files

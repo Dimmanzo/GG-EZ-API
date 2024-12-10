@@ -22,3 +22,6 @@ media/
 # Miscellaneous
 *.bak
 *.swp
+
+# Ignore node_modules folder
+node_modules/
