@@ -1,12 +1,15 @@
-from rest_framework import permissions
+from rest_framework.permissions import BasePermission, SAFE_METHODS
 
-
-class IsStaffOrReadOnly(permissions.BasePermission):
+class IsStaffOrReadOnly(BasePermission):
     """
-    Custom permission to only allow staff users to edit or delete objects.
-    Read-only permissions for others.
+    Custom permission to allow only staff users or superusers to edit or delete objects.
+    Read-only permissions for others, including anonymous users.
     """
     def has_permission(self, request, view):
-        if request.method in permissions.SAFE_METHODS:
+        if request.method in SAFE_METHODS:
             return True
-        return request.user and request.user.is_staff
+        
+        return (
+            request.user.is_authenticated and
+            (request.user.role == 'staff_user' or request.user.is_superuser)
+        )
