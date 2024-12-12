@@ -19,9 +19,11 @@ class CustomRegisterSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError({"password2": "Passwords must match."})
         return data
 
-    def create(self, validated_data):
+    def save(self, request):
+        validated_data = self.validated_data
         validated_data.pop('password2')
         password = validated_data.pop('password1')
+
         user = User(
             username=validated_data['username'],
             email=validated_data.get('email', ''),

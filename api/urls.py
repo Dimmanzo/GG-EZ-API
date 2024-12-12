@@ -28,12 +28,12 @@ urlpatterns = [
     path('api-auth/', include('rest_framework.urls')),
     path('dj-rest-auth/logout/', logout_route),
     path('dj-rest-auth/', include('dj_rest_auth.urls')),
-    path('dj-rest-auth/registration/', include('dj_rest_auth.registration.urls')),
     path('matches/', include('matches.urls')),
     path('events/', include('events.urls')),
     path('teams/', include('teams.urls')),
     path('players/', PlayersView.as_view(), name='player-list'),
     path('players/<int:pk>/', PlayerDetailView.as_view(), name='player-detail'),
+    path('', include('users.urls')),
     path('', TemplateView.as_view(template_name='index.html')),
 ]
 
