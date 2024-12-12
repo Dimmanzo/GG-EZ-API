@@ -34,6 +34,8 @@ ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='').split(',') + ['.herokuapp.co
 CORS_ALLOWED_ORIGINS = [
     config('CLIENT_ORIGIN'),
 ]
+CORS_ALLOW_CREDENTIALS = True
+
 CSRF_TRUSTED_ORIGINS = [
     config('CLIENT_ORIGIN'),
     'https://gg-ez-9f4cfd523ff5.herokuapp.com',
