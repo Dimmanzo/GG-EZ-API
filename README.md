@@ -1,153 +1,138 @@
-**GG-EZ - Esports Event Tracker**
+# **GG-EZ - Esports Event Tracker API**
 
 [View live project here!](#)
 
 ---
 
 ## **Project Rationale**
-This section explains the purpose of the project and the problem it aims to solve.
 
----
-
-## **Am I Responsive**
-Screenshots of the website showcasing its responsive design across various screen sizes.
+GG-EZ is an esports event tracker that helps users to browse through various esports events, view details about teams, players, and match schedules. It provides an organized way to track the ongoing and upcoming events, including real-time statistics and team information. This project serves as the backend API for the GG-EZ application, providing essential endpoints to fetch event details, manage users, and update event data.
 
 ---
 
 ## **Overview**
-Brief overview of the project, its features, and its purpose.
+
+This project is built with Django and Django REST Framework to provide a secure, scalable API for the GG-EZ esports event tracker platform. The API allows the frontend (React application) to interact with the system and fetch, update, and delete event-related information.
+
+The API includes endpoints for managing events, teams, matches, and players, with different permissions based on the user role (admin or default user).
 
 ---
 
 ## **Table of Contents**
+
 - [Project Rationale](#project-rationale)
 - [Project Structure](#project-structure)
 - [Features](#features)
 - [Known Issues](#known-issues)
 - [Future Improvements](#future-improvements)
 - [User Stories](#user-stories)
-- [Screenshots](#screenshots)
-- [Agile Methodology](#agile-methodology)
-- [UX Design](#ux-design)
 - [Database Schema](#database-schema)
-- [Manual Testing](#manual-testing)
-- [Validation and Browser Compatibility](#validation-and-browser-compatibility)
-- [Version Control and Commits](#version-control-and-commits)
-- [Security Considerations](#security-considerations)
-- [Deployment](#deployment)
 - [Setup Instructions](#setup-instructions)
 - [Technologies and Tools Used](#technologies-and-tools-used)
+- [Deployment](#deployment)
 - [Cloning and Forking](#cloning-and-forking)
 - [Credits](#credits)
 
 ---
 
 ## **Project Structure**
-The project is divided into two main sections:
 
-- **frontend/**: Contains the React application for the user interface.
-- **backend/**: Contains the Django REST Framework project for the API and database management.
-
-### **Folder Layout**
+The project is structured into multiple Django apps for better maintainability and separation of concerns.
 
 ```
-project-root/
-├── frontend/
-│   ├── src/
-│   │   ├── components/
-│   │   ├── pages/
-│   │   ├── styles/
-│   │   └── App.js
-│   └── package.json
-├── backend/
-│   ├── api/
-│   │   ├── models.py
-│   │   ├── views.py
-│   │   ├── serializers.py
-│   │   └── urls.py
+GG-EZ-API-main/
+├── api/
+│   ├── __init__.py
+│   ├── asgi.py
 │   ├── settings.py
-│   └── manage.py
-├── README.md
-└── .gitignore
+│   ├── urls.py
+│   ├── views.py
+│   ├── permissions.py
+├── events/
+│   ├── models.py
+│   ├── views.py
+│   ├── serializers.py
+│   ├── tests.py
+│   └── urls.py
+├── matches/
+│   ├── models.py
+│   ├── views.py
+│   ├── serializers.py
+│   ├── tests.py
+│   └── urls.py
+├── teams/
+│   ├── models.py
+│   ├── views.py
+│   ├── serializers.py
+│   ├── tests.py
+│   └── urls.py
+├── users/
+│   ├── models.py
+│   ├── views.py
+│   ├── serializers.py
+│   ├── tests.py
+└── manage.py
 ```
 
-This folder structure ensures separation of concerns and follows best practices for Django and React projects.
+**Explanation of Key Folders and Files:**
+- **api/**: Contains global configurations such as settings, URLs, and permission settings.
+- **events/**, **matches/**, **teams/**, **users/**: These are the core apps for handling the database models, views, serializers..
+- **manage.py**: The command-line utility for managing the Django project.
 
 ---
 
 ## **Features**
 
-### **Existing Features**
-- Placeholder for listing the existing features.
+### **Existing Features:**
+- **Event Management**: Admin users can create, read, update, and delete events. Public users can only view events.
+- **Team and Player Information**: View teams, players, and associated data.
+- **Search and Filter**: Events can be filtered and searched by various parameters such as name, description, and date.
+- **User Roles**: Admin users have full access, while default users only have view permissions.
 
-### **Features to be Added**
-- Placeholder for future features.
-
----
-
-## **Known Issues**
-Placeholder for any known bugs or issues in the project.
-
----
-
-## **Future Improvements**
-Placeholder for planned updates or enhancements.
+### **Features to be Added:**
+- Event statistics and performance metrics for matches.
+- Integration with the frontend React app.
 
 ---
 
 ## **User Stories**
-List of user stories completed and their purpose.
 
----
+**Event Management**
+As an admin, I can manage events, including creating, updating, and deleting them, to keep the event information up to date.
 
-## **Screenshots**
-Placeholder for screenshots of the project.
+**Event Viewing**
+As a user, I can view a list of upcoming esports events, so I can stay informed about the scheduled events.
 
----
+**Match Management**
+As an admin, I can manage matches by creating, updating, and deleting them, so that I can ensure match information is accurate and current.
 
-## **Agile Methodology**
-Explanation of the Agile process followed during the project.
+**Match Viewing**
+As a user, I can view match details, including team information, scheduled time, and results, so that I can stay updated on ongoing and upcoming matches.
 
----
+**Team Management**
+As an admin, I can manage teams, including creating, updating, and deleting them, to keep the list of teams current and relevant.
 
-## **UX Design**
-Placeholder for wireframes and design planning.
+**Team Viewing**
+As a user, I can view team details, including team names, descriptions, and logos, so I can learn more about the participating teams.
+
+**Player Management**
+As an admin, I can manage player information, including creating, updating, and deleting player profiles, to ensure player data is accurate.
+
+**Player Viewing**
+As a user, I can view player profiles, including their name, role, and team information, to learn more about individual players.
 
 ---
 
 ## **Database Schema**
-Placeholder for the database schema diagram and explanation.
 
----
-
-## **Manual Testing**
-Placeholder for documenting the manual testing process.
-
----
-
-## **Validation and Browser Compatibility**
-Placeholder for validation of the API endpoints and React components, as well as browser compatibility testing.
-
----
-
-## **Version Control and Commits**
-Placeholder for version control strategy and commit practices.
-
----
-
-## **Security Considerations**
-Placeholder for security measures implemented in the project.
-
----
-
-## **Deployment**
-Placeholder for deployment process and live project link.
+![Database Schema](media/dbschema.png)  
 
 ---
 
 ## **Setup Instructions**
+
 ### **Backend Setup**
-1. Install Python dependencies:
+1. Install dependencies:
    ```bash
    pip install -r requirements.txt
    ```
@@ -161,25 +146,21 @@ Placeholder for deployment process and live project link.
    ```
 
 ### **Frontend Setup**
-1. Install Node.js dependencies:
-   ```bash
-   npm install
-   ```
-2. Start the React development server:
-   ```bash
-   npm start
-   ```
+1. Follow the instructions in the frontend repository to set up React and connect to the API.
 
 ---
 
 ## **Technologies and Tools Used**
 - **Django REST Framework**: For building the API.
-- **React**: For creating the user interface.
 - **PostgreSQL**: The relational database used to store project data.
-- **Heroku**: Cloud platform used for deployment.
-- **Bootstrap**: CSS framework for responsive design.
+- **Heroku**: For deployment.
 - **Git**: For version control.
-- **GitHub Projects**: To manage the project using Agile methodology.
+
+---
+
+## **Deployment**
+
+The project is deployed to **Heroku** with both the frontend and backend accessible for full application use.
 
 ---
 
@@ -192,7 +173,7 @@ Placeholder for deployment process and live project link.
    ```
 2. Navigate to the project folder:
    ```bash
-   cd project-folder
+   cd GG-EZ-API-main
    ```
 
 ### **Forking**
@@ -203,6 +184,5 @@ Placeholder for deployment process and live project link.
 ---
 
 ## **Credits**
-Placeholder for credits and acknowledgments.
 
----
+- &&&
