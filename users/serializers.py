@@ -15,6 +15,8 @@ class CustomRegisterSerializer(serializers.ModelSerializer):
         }
 
     def validate(self, data):
+        if not data.get('email'):
+            raise serializers.ValidationError({"email": "This field is required."})
         if data['password1'] != data['password2']:
             raise serializers.ValidationError({"password2": "Passwords must match."})
         return data
