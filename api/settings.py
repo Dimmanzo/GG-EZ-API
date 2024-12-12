@@ -32,11 +32,12 @@ ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='').split(',') + ['.herokuapp.co
 
 # CORS Settings
 CORS_ALLOWED_ORIGINS = [
-    config('CLIENT_ORIGIN')
+    config('CLIENT_ORIGIN'),
 ]
 CSRF_TRUSTED_ORIGINS = [
     config('CLIENT_ORIGIN'),
     'https://gg-ez-9f4cfd523ff5.herokuapp.com',
+    'https://8000-dimmanzo-ggezapi-rjnpmkx5aay.ws.codeinstitute-ide.net',
 ]
 
 # Installed Apps
@@ -143,11 +144,6 @@ else:
 
 # Static Files
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [
-    BASE_DIR / 'frontend' / 'build' / 'static',
-]
-STATIC_ROOT = BASE_DIR / 'staticfiles'
-WHITENOISE_ROOT = BASE_DIR / 'staticfiles' / 'build'
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Media Files

@@ -23,17 +23,17 @@ from teams.views import PlayersView, PlayerDetailView
 from .views import root_route, logout_route
 
 urlpatterns = [
-    path('api/', root_route),
+    path('', root_route),
     path('admin/', admin.site.urls),
     path('api-auth/', include('rest_framework.urls')),
     path('dj-rest-auth/logout/', logout_route),
     path('dj-rest-auth/', include('dj_rest_auth.urls')),
     path('dj-rest-auth/registration/', include('dj_rest_auth.registration.urls')),
-    path('api/matches/', include('matches.urls')),
-    path('api/events/', include('events.urls')),
-    path('api/teams/', include('teams.urls')),
-    path('api/players/', PlayersView.as_view(), name='player-list'),
-    path('api/players/<int:pk>/', PlayerDetailView.as_view(), name='player-detail'),
+    path('matches/', include('matches.urls')),
+    path('events/', include('events.urls')),
+    path('teams/', include('teams.urls')),
+    path('players/', PlayersView.as_view(), name='player-list'),
+    path('players/<int:pk>/', PlayerDetailView.as_view(), name='player-detail'),
     path('', TemplateView.as_view(template_name='index.html')),
 ]
 
