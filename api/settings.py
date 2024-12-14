@@ -4,6 +4,8 @@ import dj_database_url
 import cloudinary
 import cloudinary.uploader
 import cloudinary.api
+from datetime import timedelta
+
 
 config = Config(RepositoryEnv('.env'))
 
@@ -161,6 +163,24 @@ JWT_AUTH_SAMESITE = 'None'
 
 REST_AUTH_REGISTER_SERIALIZERS = {
     'REGISTER_SERIALIZER': 'users.serializers.CustomRegisterSerializer',
+}
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(hours=24),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
+    'ROTATE_REFRESH_TOKENS': False,
+    'BLACKLIST_AFTER_ROTATION': True,
+    'AUTH_HEADER_TYPES': ('Bearer',),
+    'AUTH_COOKIE': 'my-app-auth',
+    'AUTH_COOKIE_SECURE': not DEBUG,
+    'AUTH_COOKIE_HTTP_ONLY': True,
+    'AUTH_COOKIE_PATH': '/',
+    'AUTH_COOKIE_SAMESITE': 'None',
+    'REFRESH_COOKIE': 'my-refresh-token',
+    'REFRESH_COOKIE_PATH': '/',
+    'REFRESH_COOKIE_HTTP_ONLY': True,
+    'REFRESH_COOKIE_SECURE': not DEBUG,
+    'REFRESH_COOKIE_SAMESITE': 'None',
 }
 
 # Custom User Model
