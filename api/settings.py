@@ -32,7 +32,6 @@ ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='').split(',') + ['.herokuapp.co
 CSRF_TRUSTED_ORIGINS = [
     "https://*.codeinstitute-ide.net",
     "https://*.herokuapp.com",
-    "https://8080-dimmanzo-ggez-2vqy7lhk3vm.ws.codeinstitute-ide.net",
 ]
 
 # Installed Apps
