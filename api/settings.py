@@ -30,8 +30,8 @@ DEBUG = config('DEBUG', default=False, cast=bool)
 
 ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='').split(',') + ['.herokuapp.com']
 CSRF_TRUSTED_ORIGINS = [
-    "https://*.codeinstitute-ide.net",
-    "https://*.herokuapp.com",
+    "https://8080-dimmanzo-ggez-2vqy7lhk3vm.ws.codeinstitute-ide.net",
+    "https://gg-ez-750b5184ca87.herokuapp.com/",
 ]
 
 # Installed Apps
