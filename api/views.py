@@ -1,5 +1,10 @@
-from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from rest_framework_simplejwt.token_blacklist.models import BlacklistedToken
+from rest_framework_simplejwt.exceptions import TokenError, InvalidToken
+from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework.permissions import IsAuthenticated
+from django.views.decorators.csrf import csrf_exempt
+from rest_framework.decorators import permission_classes, api_view
 from .settings import (
     JWT_AUTH_COOKIE, JWT_AUTH_REFRESH_COOKIE, JWT_AUTH_SAMESITE, JWT_AUTH_SECURE,
 )
@@ -12,25 +17,10 @@ def root_route(request):
     })
 
 
+@csrf_exempt
 @api_view(['POST'])
 def logout_route(request):
-    response = Response()
-    response.set_cookie(
-        key=JWT_AUTH_COOKIE,
-        value='',
-        httponly=True,
-        expires='Thu, 01 Jan 1970 00:00:00 GMT',
-        max_age=0,
-        samesite=JWT_AUTH_SAMESITE,
-        secure=JWT_AUTH_SECURE,
-    )
-    response.set_cookie(
-        key=JWT_AUTH_REFRESH_COOKIE,
-        value='',
-        httponly=True,
-        expires='Thu, 01 Jan 1970 00:00:00 GMT',
-        max_age=0,
-        samesite=JWT_AUTH_SAMESITE,
-        secure=JWT_AUTH_SECURE,
-    )
+    response = Response({"message": "Logged out"})
+    response.delete_cookie("my-app-auth")
+    response.delete_cookie("my-refresh-token")
     return response

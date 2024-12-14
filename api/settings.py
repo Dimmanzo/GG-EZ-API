@@ -29,17 +29,10 @@ SECRET_KEY = config('SECRET_KEY')
 DEBUG = config('DEBUG', default=False, cast=bool)
 
 ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='').split(',') + ['.herokuapp.com']
-
-# CORS Settings
-CORS_ALLOWED_ORIGINS = [
-    config('CLIENT_ORIGIN'),
-]
-CORS_ALLOW_CREDENTIALS = True
-
 CSRF_TRUSTED_ORIGINS = [
-    config('CLIENT_ORIGIN'),
-    'https://gg-ez-9f4cfd523ff5.herokuapp.com',
-    'https://8000-dimmanzo-ggezapi-rjnpmkx5aay.ws.codeinstitute-ide.net',
+    "https://*.codeinstitute-ide.net",
+    "https://*.herokuapp.com",
+    "https://8080-dimmanzo-ggez-2vqy7lhk3vm.ws.codeinstitute-ide.net",
 ]
 
 # Installed Apps
@@ -49,26 +42,26 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'cloudinary_storage',
     'django.contrib.staticfiles',
-    'django_filters',
+    'cloudinary',
     'rest_framework',
+    'django_filters',
     'rest_framework.authtoken',
     'dj_rest_auth',
+    'django.contrib.sites',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
     'dj_rest_auth.registration',
     'corsheaders',
-    'cloudinary',
-    'cloudinary_storage',
+
     'users',
     'events',
     'teams',
     'matches',
 ]
-
 SITE_ID = 1
-
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
@@ -77,10 +70,22 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'allauth.account.middleware.AccountMiddleware', 
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+CLIENT_ORIGIN = config('CLIENT_ORIGIN', default='')
+
+if CLIENT_ORIGIN:
+    CORS_ALLOWED_ORIGINS = [
+        config('CLIENT_ORIGIN'),
+    ]
+else:
+    CORS_ALLOWED_ORIGIN_REGEXES = [
+        r"^https:\/\/.*\.codeinstitute-ide\.net$",
+    ]
+
+CORS_ALLOW_CREDENTIALS = True
 
 ROOT_URLCONF = 'api.urls'
 
@@ -121,9 +126,9 @@ if not DEBUG:
     REST_FRAMEWORK['DEFAULT_RENDERER_CLASSES'] = ['rest_framework.renderers.JSONRenderer']
 
 REST_USE_JWT = True
+JWT_AUTH_SECURE = True
 JWT_AUTH_COOKIE = 'my-app-auth'
 JWT_AUTH_REFRESH_COOKIE = 'my-refresh-token'
-JWT_AUTH_SECURE = not DEBUG
 JWT_AUTH_SAMESITE = 'None'
 
 REST_AUTH_REGISTER_SERIALIZERS = {
