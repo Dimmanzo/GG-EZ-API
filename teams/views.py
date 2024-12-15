@@ -4,7 +4,6 @@ from api.permissions import IsStaffOrReadOnly
 from .models import Team, Player
 from .serializers import TeamSerializer, PlayerSerializer
 
-
 class TeamsView(generics.ListCreateAPIView):
     """
     List all teams or create a new team.

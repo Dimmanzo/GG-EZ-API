@@ -1,3 +1,6 @@
+import requests
+from django.views.decorators.csrf import csrf_exempt
+from django.http import JsonResponse
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from .settings import (
@@ -35,3 +38,28 @@ def logout_route(request):
         secure=JWT_AUTH_SECURE,
     )
     return response
+
+@csrf_exempt
+def upload_to_cloudinary(request):
+    """
+    Proxy the file upload to Cloudinary to avoid CORS issues.
+    """
+    if request.method == "POST":
+        try:
+            file = request.FILES['file']
+            upload_preset = "ml_default"
+
+            cloudinary_url = "https://api.cloudinary.com/v1_1/dzidcvhig/image/upload"
+
+            response = requests.post(
+                cloudinary_url,
+                data={"upload_preset": upload_preset},
+                files={"file": (file.name, file.read(), file.content_type)}
+            )
+            
+            return JsonResponse(response.json(), safe=False)
+
+        except Exception as e:
+            return JsonResponse({"error": str(e)}, status=500)
+
+    return JsonResponse({"error": "Invalid request method"}, status=400)

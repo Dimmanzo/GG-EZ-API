@@ -20,7 +20,7 @@ from django.conf.urls.static import static
 from django.urls import path, include
 from django.views.generic import TemplateView
 from teams.views import PlayersView, PlayerDetailView
-from .views import root_route, logout_route
+from .views import root_route, logout_route, upload_to_cloudinary
 
 urlpatterns = [
     path('', root_route),
@@ -36,6 +36,7 @@ urlpatterns = [
     path('players/<int:pk>/', PlayerDetailView.as_view(), name='player-detail'),
     path('', include('users.urls')),
     path('', TemplateView.as_view(template_name='index.html')),
+    path("cloudinary-proxy/", upload_to_cloudinary, name="cloudinary_proxy"),
 ]
 
 if settings.DEBUG:
