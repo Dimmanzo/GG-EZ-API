@@ -3,11 +3,14 @@ from .models import Team, Player
 
 
 class PlayerSerializer(serializers.ModelSerializer):
-    team_name = serializers.CharField(source='team.name', read_only=True)
+    team_name = serializers.SerializerMethodField()
 
     class Meta:
         model = Player
         fields = ['id', 'name', 'role', 'avatar', 'team', 'team_name']
+
+    def get_team_name(self, obj):
+        return obj.team.name if obj.team else "Unassigned"
 
     def to_representation(self, instance):
         """Ensure avatar URL is always in full format with Cloudinary prefix."""
@@ -21,13 +24,16 @@ class PlayerSerializer(serializers.ModelSerializer):
 
 class TeamSerializer(serializers.ModelSerializer):
     players = PlayerSerializer(many=True, read_only=True)
-    logo = serializers.SerializerMethodField()
 
     class Meta:
         model = Team
         fields = ['id', 'name', 'description', 'logo', 'players']
 
-    def get_logo(self, obj):
-        if obj.logo:
-            return f"https://res.cloudinary.com/dzidcvhig/{obj.logo}"
-        return None
+    def to_representation(self, instance):
+        """Ensure logo URL is always in full format with Cloudinary prefix."""
+        representation = super().to_representation(instance)
+        logo = representation.get("logo")
+
+        if logo and not logo.startswith("https://res.cloudinary.com/"):
+            representation["logo"] = f"https://res.cloudinary.com/dzidcvhig/{logo}"
+        return representation

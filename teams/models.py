@@ -11,8 +11,24 @@ class Team(models.Model):
     logo = CloudinaryField('image', blank=True, null=True)
 
     def save(self, *args, **kwargs):
-        if not self.logo or str(self.logo).startswith("https://res.cloudinary.com/dzidcvhig/"):
+        if self.logo:
+            logo_str = str(self.logo)
+
+            # If the logo contains a full Cloudinary URL
+            if "res.cloudinary.com" in logo_str:
+                parsed_url = urlparse(logo_str)
+                # Extract the relative path after '/image/upload/'
+                if "image/upload/" in parsed_url.path:
+                    relative_path = parsed_url.path.split("image/upload/")[-1]
+                    self.logo = f"image/upload/{relative_path}"
+                else:
+                    # Store the path as-is if it's already relative
+                    self.logo = parsed_url.path.lstrip("/")
+
+        # Assign the default logo if none is provided
+        if not self.logo or str(self.logo).strip() == "":
             self.logo = DEFAULT_TEAM_LOGO
+
         super().save(*args, **kwargs)
 
     def __str__(self):
@@ -23,7 +39,13 @@ class Player(models.Model):
     name = models.CharField(max_length=255)
     role = models.CharField(max_length=255)
     avatar = CloudinaryField('image', blank=True, null=True)
-    team = models.ForeignKey('Team', on_delete=models.CASCADE, related_name="players")
+    team = models.ForeignKey(
+        'Team',
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="players"
+    )
 
     def save(self, *args, **kwargs):
         if self.avatar:
