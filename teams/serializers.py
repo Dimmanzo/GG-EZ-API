@@ -3,6 +3,11 @@ from .models import Team, Player
 
 
 class PlayerSerializer(serializers.ModelSerializer):
+    avatar = serializers.ImageField(
+        required=False, 
+        allow_null=True, 
+        use_url=True
+    )
     team_name = serializers.SerializerMethodField()
 
     class Meta:
@@ -18,7 +23,7 @@ class PlayerSerializer(serializers.ModelSerializer):
         avatar = representation.get("avatar")
 
         if avatar and not avatar.startswith("https://res.cloudinary.com/"):
-            representation["avatar"] = f"https://res.cloudinary.com/dzidcvhig/{avatar}"
+            representation["avatar"] = f"{avatar}"
         return representation
 
 
