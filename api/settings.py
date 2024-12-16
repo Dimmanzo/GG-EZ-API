@@ -2,13 +2,6 @@ from pathlib import Path
 from datetime import timedelta
 import os
 
-# Import variables from env.py for local development
-try:
-    from env import *
-except ImportError:
-    # Raise an error if env.py is missing or not properly configured
-    raise ImportError("env.py file is missing or not configured correctly!")
-
 # Base directory
 BASE_DIR = Path(__file__).resolve().parent
 
