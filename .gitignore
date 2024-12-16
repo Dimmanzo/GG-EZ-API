@@ -7,7 +7,7 @@ venv/
 env/
 
 # Environment variables
-.env
+env.py
 
 # Database
 *.sqlite3

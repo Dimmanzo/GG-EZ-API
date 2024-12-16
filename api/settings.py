@@ -1,32 +1,26 @@
 from pathlib import Path
-from decouple import Config, Csv, RepositoryEnv
-import dj_database_url
-import cloudinary
-import cloudinary.uploader
-import cloudinary.api
 from datetime import timedelta
+import os
 
+# Import variables from env.py for local development
+try:
+    from env import *
+except ImportError:
+    # Raise an error if env.py is missing or not properly configured
+    raise ImportError("env.py file is missing or not configured correctly!")
 
-config = Config(RepositoryEnv('.env'))
-
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
+# Base directory
 BASE_DIR = Path(__file__).resolve().parent
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
+# Security settings
+SECRET_KEY = SECRET_KEY
+DEBUG = DEBUG
+ALLOWED_HOSTS = ALLOWED_HOSTS
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = config('SECRET_KEY')
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = config('DEBUG', default=False, cast=bool)
-
-ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='', cast=Csv())
-
+# CSRF trusted origins
 CSRF_TRUSTED_ORIGINS = [f"https://{host}" for host in ALLOWED_HOSTS]
 
-# Application definition
-
+# Installed apps
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -47,6 +41,7 @@ INSTALLED_APPS = [
     'dj_rest_auth.registration',
     'corsheaders',
 
+    # Your apps
     'users',
     'events',
     'teams',
@@ -55,6 +50,7 @@ INSTALLED_APPS = [
 
 SITE_ID = 1
 
+# Middleware
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
@@ -67,8 +63,11 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+# URL and WSGI configuration
 ROOT_URLCONF = 'api.urls'
+WSGI_APPLICATION = 'api.wsgi.application'
 
+# Templates
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -85,11 +84,12 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'api.wsgi.application'
-
-# Database
+# Database configuration
 DATABASES = {
-    'default': dj_database_url.parse(config('DATABASE_URL'))
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'URL': DATABASE_URL,
+    }
 }
 
 # Password validation
@@ -110,33 +110,24 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # Internationalization
 LANGUAGE_CODE = 'en-us'
-
 TIME_ZONE = 'UTC'
-
 USE_I18N = True
-
 USE_TZ = True
 
-# Static files (CSS, JavaScript, Images)
+# Static and Media files
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-# Cloudinary Configuration
-cloudinary.config(
-    cloud_name=config('CLOUD_NAME'),
-    api_key=config('API_KEY'),
-    api_secret=config('API_SECRET'),
-)
+MEDIA_URL = '/media/'
 
+# Cloudinary configuration
 CLOUDINARY_STORAGE = {
-    'CLOUDINARY_URL': config('CLOUDINARY_URL'),
+    'CLOUDINARY_URL': CLOUDINARY_URL,
 }
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
-MEDIA_URL = '/media/'
-
-# REST Framework
+# Rest Framework
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.SessionAuthentication'
@@ -155,6 +146,7 @@ REST_FRAMEWORK = {
 if not DEBUG:
     REST_FRAMEWORK['DEFAULT_RENDERER_CLASSES'] = ['rest_framework.renderers.JSONRenderer']
 
+# JWT configuration
 REST_USE_JWT = True
 JWT_AUTH_SECURE = True
 JWT_AUTH_COOKIE = 'my-app-auth'
@@ -194,7 +186,5 @@ ACCOUNT_EMAIL_REQUIRED = False
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # CORS Configuration
-CLIENT_ORIGIN = config('CLIENT_ORIGIN')
-
 CORS_ALLOWED_ORIGINS = [CLIENT_ORIGIN]
 CORS_ALLOW_CREDENTIALS = True
