@@ -11,7 +11,6 @@ class MatchesView(generics.ListCreateAPIView):
     """
     List all matches or create a new match if logged in as admin.
     """
-    serializer_class = MatchSerializer
     queryset = Match.objects.all().order_by('scheduled_time')
     permission_classes = [IsStaffOrReadOnly]
 
@@ -22,23 +21,16 @@ class MatchesView(generics.ListCreateAPIView):
         filters.OrderingFilter,
     ]
 
-    # Filtering, searching and ordering
+    # Filtering, searching, and ordering
     filterset_fields = ['status']
     search_fields = ['team1__name', 'team2__name', 'event__name']
-    ordering_fields = ['sheduled_time', 'status', 'event__name']
+    ordering_fields = ['scheduled_time', 'status', 'event__name']
 
     def get_serializer_class(self):
+        # Use MatchSerializer for GET requests, MatchCreateSerializer for POST requests
         if self.request.method == 'POST':
             return MatchCreateSerializer
-        return MatchDetailSerializer
-
-    def perform_create(self, serializer):
-        if not self.request.user.is_staff:
-            return Response(
-                {"detail": "Only admins can create matches."},
-                status=status.HTTP_403_FORBIDDEN
-            )
-        serializer.save()
+        return MatchSerializer
 
 class MatchDetail(generics.RetrieveAPIView):
     """
@@ -64,7 +56,7 @@ class MatchDetail(generics.RetrieveAPIView):
         serializer = self.get_serializer(obj, data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return Response(serializer.data, status=status.HTTTP_200_OK)
+            return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request, *args, **kwargs):

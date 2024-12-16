@@ -39,4 +39,3 @@ class EventDetailView(generics.RetrieveUpdateDestroyAPIView):
             return self.queryset.get(pk=self.kwargs['pk'])
         except Event.DoesNotExist:
             raise NotFound(detail="No event found with the given ID.", code=404)
-
