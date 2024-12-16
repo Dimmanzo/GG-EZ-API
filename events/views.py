@@ -40,12 +40,3 @@ class EventDetailView(generics.RetrieveUpdateDestroyAPIView):
         except Event.DoesNotExist:
             raise NotFound(detail="No event found with the given ID.", code=404)
 
-    def delete(self, request, *args, **kwargs):
-        obj = self.get_object()
-        if not request.user.is_staff or request.user.role == 'staff_user':
-            return Response(
-                {"detail": "Only admins can delete events."},
-                status=status.HTTP_403_FORBIDDEN
-            )
-        obj.delete()
-        return Response({"detail": f"Event '{obj.name}' deleted successfully."}, status=status.HTTP_204_NO_CONTENT)
