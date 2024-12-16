@@ -1,14 +1,18 @@
 from pathlib import Path
 from datetime import timedelta
 import os
+import dj_database_url
+
+if os.path.exists('env.py'):
+    import env
 
 # Base directory
 BASE_DIR = Path(__file__).resolve().parent
 
 # Security settings
-SECRET_KEY = SECRET_KEY
-DEBUG = DEBUG
-ALLOWED_HOSTS = ALLOWED_HOSTS
+SECRET_KEY = os.getenv("SECRET_KEY")
+DEBUG = os.getenv("DEBUG", "False").lower() == "true"
+ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "").split(",")
 
 # CSRF trusted origins
 CSRF_TRUSTED_ORIGINS = [f"https://{host}" for host in ALLOWED_HOSTS]
@@ -79,10 +83,7 @@ TEMPLATES = [
 
 # Database configuration
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'URL': DATABASE_URL,
-    }
+    'default': dj_database_url.config(default=os.getenv("DATABASE_URL"))
 }
 
 # Password validation
@@ -113,10 +114,11 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 MEDIA_URL = '/media/'
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 # Cloudinary configuration
 CLOUDINARY_STORAGE = {
-    'CLOUDINARY_URL': CLOUDINARY_URL,
+    'CLOUDINARY_URL': os.getenv("CLOUDINARY_URL"),
 }
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
@@ -179,5 +181,6 @@ ACCOUNT_EMAIL_REQUIRED = False
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # CORS Configuration
+CLIENT_ORIGIN = os.getenv("CLIENT_ORIGIN")
 CORS_ALLOWED_ORIGINS = [CLIENT_ORIGIN]
 CORS_ALLOW_CREDENTIALS = True
