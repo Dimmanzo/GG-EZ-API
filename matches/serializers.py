@@ -19,7 +19,7 @@ class MatchSerializer(serializers.ModelSerializer):
         model = Match
         fields = [
             'id', 'event', 'event_name', 'team1', 'team1_name', 
-            'team2', 'team2_name', 'scheduled_time', 'status'
+            'team2', 'team2_name', 'scheduled_time', 'result', 'status'
         ]
 
     def get_event_name(self, obj):

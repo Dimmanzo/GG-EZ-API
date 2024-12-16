@@ -1,9 +1,8 @@
 from django.db import models
 from cloudinary.models import CloudinaryField
-from urllib.parse import urlparse
 
-DEFAULT_TEAM_LOGO = "image/upload/v1734180783/gg-ez/defaults/xgtwsoqklrrtgyeqcgq0.webp"
-DEFAULT_PLAYER_AVATAR = "image/upload/v1734180756/gg-ez/defaults/vlhxug3hav82zlm6thbf.webp"
+DEFAULT_TEAM_LOGO = "https://res.cloudinary.com/dzidcvhig/image/upload/v1734180783/gg-ez/defaults/xgtwsoqklrrtgyeqcgq0.webp"
+DEFAULT_PLAYER_AVATAR = "https://res.cloudinary.com/dzidcvhig/image/upload/v1734180756/gg-ez/defaults/vlhxug3hav82zlm6thbf.webp"
 
 class Team(models.Model):
     name = models.CharField(max_length=255)
@@ -11,24 +10,11 @@ class Team(models.Model):
     logo = CloudinaryField('image', blank=True, null=True)
 
     def save(self, *args, **kwargs):
-        if self.logo:
-            logo_str = str(self.logo)
-
-            # If the logo contains a full Cloudinary URL
-            if "res.cloudinary.com" in logo_str:
-                parsed_url = urlparse(logo_str)
-                # Extract the relative path after '/image/upload/'
-                if "image/upload/" in parsed_url.path:
-                    relative_path = parsed_url.path.split("image/upload/")[-1]
-                    self.logo = f"image/upload/{relative_path}"
-                else:
-                    # Store the path as-is if it's already relative
-                    self.logo = parsed_url.path.lstrip("/")
-
-        # Assign the default logo if none is provided
-        if not self.logo or str(self.logo).strip() == "":
+        """
+        Set the default logo if no logo is provided.
+        """
+        if not self.logo:
             self.logo = DEFAULT_TEAM_LOGO
-
         super().save(*args, **kwargs)
 
     def __str__(self):
@@ -48,24 +34,11 @@ class Player(models.Model):
     )
 
     def save(self, *args, **kwargs):
-        if self.avatar:
-            avatar_str = str(self.avatar)
-
-            # If the avatar contains a full Cloudinary URL
-            if "res.cloudinary.com" in avatar_str:
-                parsed_url = urlparse(avatar_str)
-                # Extract the relative path after '/image/upload/'
-                if "image/upload/" in parsed_url.path:
-                    relative_path = parsed_url.path.split("image/upload/")[-1]
-                    self.avatar = f"image/upload/{relative_path}"
-                else:
-                    # Store the path as-is if it's already relative
-                    self.avatar = parsed_url.path.lstrip("/")
-
-        # Assign the default avatar if none is provided
-        if not self.avatar or str(self.avatar).strip() == "":
+        """
+        Set the default avatar if no avatar is provided.
+        """
+        if not self.avatar:
             self.avatar = DEFAULT_PLAYER_AVATAR
-
         super().save(*args, **kwargs)
 
     def __str__(self):

@@ -1,13 +1,8 @@
 from rest_framework import serializers
 from .models import Team, Player
 
-
 class PlayerSerializer(serializers.ModelSerializer):
-    avatar = serializers.ImageField(
-        required=False, 
-        allow_null=True, 
-        use_url=True
-    )
+    avatar = serializers.URLField(required=False, allow_null=True, allow_blank=True)
     team_name = serializers.SerializerMethodField()
 
     class Meta:
@@ -17,33 +12,31 @@ class PlayerSerializer(serializers.ModelSerializer):
     def get_team_name(self, obj):
         return obj.team.name if obj.team else "Unassigned"
 
-    def to_representation(self, instance):
-        """Ensure avatar URL is always in full format with Cloudinary prefix."""
-        representation = super().to_representation(instance)
-        avatar = representation.get("avatar")
-
-        if avatar and not avatar.startswith("https://res.cloudinary.com/"):
-            representation["avatar"] = f"{avatar}"
-        return representation
+    def validate_avatar(self, value):
+        """
+        Validate the avatar field to allow URLs or null values.
+        """
+        if isinstance(value, str) and value.startswith("http"):
+            return value  # Accept URLs
+        if value is None:
+            return value  # Allow null values
+        raise serializers.ValidationError("Invalid avatar format. Provide a valid URL.")
 
 
 class TeamSerializer(serializers.ModelSerializer):
-    logo = serializers.ImageField(
-        required=False, 
-        allow_null=True, 
-        use_url=True
-    )
+    logo = serializers.URLField(required=False, allow_null=True, allow_blank=True)
     players = PlayerSerializer(many=True, read_only=True)
 
     class Meta:
         model = Team
         fields = ['id', 'name', 'description', 'logo', 'players']
 
-    def to_representation(self, instance):
-        """Ensure logo URL is always in full format with Cloudinary prefix."""
-        representation = super().to_representation(instance)
-        logo = representation.get("logo")
-
-        if logo and not logo.startswith("https://res.cloudinary.com/"):
-            representation["logo"] = f"{logo}"
-        return representation
+    def validate_logo(self, value):
+        """
+        Validate the logo field to allow URLs or null values.
+        """
+        if isinstance(value, str) and value.startswith("http"):
+            return value  # Accept URLs
+        if value is None:
+            return value  # Allow null values
+        raise serializers.ValidationError("Invalid logo format. Provide a valid URL.")

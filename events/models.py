@@ -1,7 +1,7 @@
 from django.db import models
 from cloudinary.models import CloudinaryField
 
-DEFAULT_EVENT_IMAGE = "image/upload/v1734180701/gg-ez/defaults/nou2mptttvfkmdtijdhu.webp"
+DEFAULT_EVENT_IMAGE = "https://res.cloudinary.com/dzidcvhig/image/upload/v1734180701/gg-ez/defaults/nou2mptttvfkmdtijdhu.webp"
 
 class Event(models.Model):
     name = models.CharField(max_length=255)
@@ -11,7 +11,10 @@ class Event(models.Model):
     image = CloudinaryField('image', blank=True, null=True)
 
     def save(self, *args, **kwargs):
-        if not self.image or str(self.image).startswith("https://res.cloudinary.com/dzidcvhig/"):
+        """
+        Ensure the image field accepts both Cloudinary URLs and the default image.
+        """
+        if not self.image:  # If no image is provided, set the default
             self.image = DEFAULT_EVENT_IMAGE
         super().save(*args, **kwargs)
 
