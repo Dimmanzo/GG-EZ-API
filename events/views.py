@@ -26,11 +26,6 @@ class EventsView(generics.ListCreateAPIView):
     search_fields = ['name', 'description', 'start_date', 'end_date']
     ordering_fields = ['start_date', 'end_date']
 
-    def perform_create(self, serializer):
-        if not self.request.user.is_staff:
-            raise permissions.PermissionDenied("Only admins can create events.")
-        serializer.save()
-
 class EventDetailView(generics.RetrieveUpdateDestroyAPIView):
     """
     Show details of a specific event by ID.
@@ -47,18 +42,10 @@ class EventDetailView(generics.RetrieveUpdateDestroyAPIView):
 
     def delete(self, request, *args, **kwargs):
         obj = self.get_object()
-        if not request.user.is_staff:
+        if not request.user.is_staff or request.user.role == 'staff_user':
             return Response(
-                {"detail": "Only admins can delete event."},
+                {"detail": "Only admins can delete events."},
                 status=status.HTTP_403_FORBIDDEN
             )
         obj.delete()
         return Response({"detail": f"Event '{obj.name}' deleted successfully."}, status=status.HTTP_204_NO_CONTENT)
-
-    def perform_create(self, serializer):
-        if not self.request.user.is_staff:
-            return Response(
-                {"detail": "Only admins can update events."},
-                status=status.HTTP_403_FORBIDDEN
-            )
-        serializer.save()

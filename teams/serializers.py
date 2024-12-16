@@ -28,6 +28,11 @@ class PlayerSerializer(serializers.ModelSerializer):
 
 
 class TeamSerializer(serializers.ModelSerializer):
+    logo = serializers.ImageField(
+        required=False, 
+        allow_null=True, 
+        use_url=True
+    )
     players = PlayerSerializer(many=True, read_only=True)
 
     class Meta:
@@ -40,5 +45,5 @@ class TeamSerializer(serializers.ModelSerializer):
         logo = representation.get("logo")
 
         if logo and not logo.startswith("https://res.cloudinary.com/"):
-            representation["logo"] = f"https://res.cloudinary.com/dzidcvhig/{logo}"
+            representation["logo"] = f"{logo}"
         return representation
