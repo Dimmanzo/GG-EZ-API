@@ -1,33 +1,38 @@
 # **GG-EZ - Esports Event Tracker API**
 
-[View live project here!](#)
+[View Live Project Here!](https://gg-ez-api-ce7093aa17cf.herokuapp.com/)
 
 ---
 
 ## **Project Rationale**
 
-GG-EZ is an esports event tracker that helps users to browse through various esports events, view details about teams, players, and match schedules. It provides an organized way to track the ongoing and upcoming events, including real-time statistics and team information. This project serves as the backend API for the GG-EZ application, providing essential endpoints to fetch event details, manage users, and update event data.
+GG-EZ is a powerful esports event tracker designed to simplify the way users follow esports tournaments, matches, teams, and players.  
+This project serves as the backend API for the GG-EZ platform, handling all event-related data and user interactions.
+
+The API is secure, scalable, and built with **Django** and **Django REST Framework**, enabling the frontend to fetch, update, and manage information seamlessly.
 
 ---
 
 ## **Overview**
 
-This project is built with Django and Django REST Framework to provide a secure, scalable API for the GG-EZ esports event tracker platform. The API allows the frontend (React application) to interact with the system and fetch, update, and delete event-related information.
-
-The API includes endpoints for managing events, teams, matches, and players, with different permissions based on the user role (admin or default user).
+This backend API supports:
+- **Event Management**: Manage details of esports tournaments and matches.
+- **Team and Player Data**: Retrieve team profiles and player statistics.
+- **User Roles**: Admin users can create and modify events, while general users can browse event data.
+- **Search and Filter**: Easily find specific events or teams using filters and keywords.
 
 ---
 
 ## **Table of Contents**
 
 - [Project Rationale](#project-rationale)
+- [Overview](#overview)
 - [Project Structure](#project-structure)
 - [Features](#features)
-- [Known Issues](#known-issues)
-- [Future Improvements](#future-improvements)
 - [User Stories](#user-stories)
 - [Database Schema](#database-schema)
 - [Setup Instructions](#setup-instructions)
+- [Manual Testing](#manual-testing)
 - [Technologies and Tools Used](#technologies-and-tools-used)
 - [Deployment](#deployment)
 - [Cloning and Forking](#cloning-and-forking)
@@ -37,152 +42,216 @@ The API includes endpoints for managing events, teams, matches, and players, wit
 
 ## **Project Structure**
 
-The project is structured into multiple Django apps for better maintainability and separation of concerns.
+The project follows a clean and modular structure for maintainability.
 
 ```
-GG-EZ-API-main/
-├── api/
-│   ├── __init__.py
-│   ├── asgi.py
+GG-EZ-API/
+├── api/                  # Global configurations and settings
 │   ├── settings.py
 │   ├── urls.py
 │   ├── views.py
-│   ├── permissions.py
-├── events/
+├── events/               # Events app
 │   ├── models.py
-│   ├── views.py
 │   ├── serializers.py
-│   ├── tests.py
+│   ├── views.py
 │   └── urls.py
-├── matches/
+├── teams/                # Teams app
 │   ├── models.py
-│   ├── views.py
 │   ├── serializers.py
-│   ├── tests.py
+│   ├── views.py
 │   └── urls.py
-├── teams/
+├── matches/              # Matches app
 │   ├── models.py
-│   ├── views.py
 │   ├── serializers.py
-│   ├── tests.py
+│   ├── views.py
 │   └── urls.py
-├── users/
+├── users/                # Custom user management
 │   ├── models.py
-│   ├── views.py
 │   ├── serializers.py
-│   ├── tests.py
-└── manage.py
+│   └── views.py
+└── manage.py             # Django management script
 ```
-
-**Explanation of Key Folders and Files:**
-- **api/**: Contains global configurations such as settings, URLs, and permission settings.
-- **events/**, **matches/**, **teams/**, **users/**: These are the core apps for handling the database models, views, serializers..
-- **manage.py**: The command-line utility for managing the Django project.
 
 ---
 
 ## **Features**
 
-### **Existing Features:**
-- **Event Management**: Admin users can create, read, update, and delete events. Public users can only view events.
-- **Team and Player Information**: View teams, players, and associated data.
-- **Search and Filter**: Events can be filtered and searched by various parameters such as name, description, and date.
-- **User Roles**: Admin users have full access, while default users only have view permissions.
+### **Core Features**
+- **Event Management**:  
+  Admins can create, edit, and delete esports events, while users can view them.
 
-### **Features to be Added:**
-- Event statistics and performance metrics for matches.
-- Integration with the frontend React app.
+- **Matches**:  
+  Manage match details like teams, schedules, and results.
+
+- **Teams and Players**:  
+  View team profiles, player names, and roles.
+
+- **User Authentication**:  
+  Role-based access ensures admins have more control while general users can only view data.
+
+- **Search and Filtering**:  
+  Find events, teams, and matches with keyword search and filters.
 
 ---
 
 ## **User Stories**
 
-**Event Management**
-As an admin, I can manage events, including creating, updating, and deleting them, to keep the event information up to date.
+### **Admin User**
+- As an admin, I can manage events, teams, and players to keep the information up-to-date.
+- As an admin, I can delete outdated matches to maintain data accuracy.
 
-**Event Viewing**
-As a user, I can view a list of upcoming esports events, so I can stay informed about the scheduled events.
-
-**Match Management**
-As an admin, I can manage matches by creating, updating, and deleting them, so that I can ensure match information is accurate and current.
-
-**Match Viewing**
-As a user, I can view match details, including team information, scheduled time, and results, so that I can stay updated on ongoing and upcoming matches.
-
-**Team Management**
-As an admin, I can manage teams, including creating, updating, and deleting them, to keep the list of teams current and relevant.
-
-**Team Viewing**
-As a user, I can view team details, including team names, descriptions, and logos, so I can learn more about the participating teams.
-
-**Player Management**
-As an admin, I can manage player information, including creating, updating, and deleting player profiles, to ensure player data is accurate.
-
-**Player Viewing**
-As a user, I can view player profiles, including their name, role, and team information, to learn more about individual players.
+### **General User**
+- As a user, I can view a list of all esports events and match schedules.
+- As a user, I can view details about my favorite teams and players.
 
 ---
 
 ## **Database Schema**
 
-![Database Schema](media/dbschema.png)  
+![Database Schema](media/dbschema.png)
 
 ---
 
 ## **Setup Instructions**
 
-### **Backend Setup**
-1. Install dependencies:
-   ```bash
-   pip install -r requirements.txt
-   ```
-2. Run migrations:
-   ```bash
-   python manage.py migrate
-   ```
-3. Start the backend server:
-   ```bash
-   python manage.py runserver
-   ```
+Follow these steps to set up the API locally:
 
-### **Frontend Setup**
-1. Follow the instructions in the frontend repository to set up React and connect to the API.
+### **1. Clone the Repository**
+
+```bash
+git clone <repository_url>
+cd GG-EZ-API
+```
+
+### **2. Install Dependencies**
+
+```bash
+pip install -r requirements.txt
+```
+
+### **3. Set Up Environment Variables**
+
+Create a `.env` file in the root directory and add:
+
+```plaintext
+SECRET_KEY=your_secret_key
+DEBUG=True
+ALLOWED_HOSTS=127.0.0.1,localhost
+DATABASE_URL=your_database_url
+```
+
+### **4. Run Migrations**
+
+```bash
+python manage.py migrate
+```
+
+### **5. Create a Superuser**
+
+```bash
+python manage.py createsuperuser
+```
+
+### **6. Start the Development Server**
+
+```bash
+python manage.py runserver
+```
+
+Access the API at `http://127.0.0.1:8000/`.
+
+---
+
+## **Manual Testing**
+
+Below is a detailed table summarizing manual tests performed for **events**, **matches**, **teams**, **players**, and **users**.
+
+| **Feature**                     | **Test Case**                                         | **Expected Outcome**                        | **Result** |
+|---------------------------------|------------------------------------------------------|--------------------------------------------|------------|
+| **Event Management**            | Admin creates a new event                            | Event is created and displayed in the list | ✅ Pass     |
+|                                 | Admin updates an existing event                      | Event details are updated successfully     | ✅ Pass     |
+|                                 | Admin deletes an event                               | Event is removed from the list             | ✅ Pass     |
+|                                 | User views a list of events                          | Events are displayed correctly             | ✅ Pass     |
+| **Match Management**            | Admin creates a new match                            | Match is created with correct details      | ✅ Pass     |
+|                                 | Admin updates match details                          | Match information is updated               | ✅ Pass     |
+|                                 | Admin deletes a match                                | Match is deleted from the database         | ✅ Pass     |
+|                                 | User views a list of matches                         | Matches are displayed correctly            | ✅ Pass     |
+| **Team Management**             | Admin creates a new team                             | Team is added with default logo if missing | ✅ Pass     |
+|                                 | Admin updates team description                       | Team details are updated                   | ✅ Pass     |
+|                                 | Admin deletes a team                                 | Team is removed from the database          | ✅ Pass     |
+|                                 | User views team profiles                             | Teams and their players are displayed      | ✅ Pass     |
+| **Player Management**           | Admin adds a player to a team                        | Player is linked to the correct team       | ✅ Pass     |
+|                                 | Admin updates player role                            | Player role is updated successfully        | ✅ Pass     |
+|                                 | Admin deletes a player                               | Player is removed from the team            | ✅ Pass     |
+|                                 | User views player details                            | Player details (name, role, team) displayed| ✅ Pass     |
+| **User Authentication**         | User registers with valid credentials                | Account is created successfully            | ✅ Pass     |
+|                                 | User registers with mismatching passwords            | Validation error is returned               | ✅ Pass     |
+|                                 | User logs in with correct credentials                | User is authenticated and logged in        | ✅ Pass     |
+|                                 | User logs out                                        | User session is cleared                    | ✅ Pass     |
+|                                 | Admin attempts restricted action (delete player)     | Action is allowed                          | ✅ Pass     |
+|                                 | User attempts restricted action (delete player)      | Action is forbidden (HTTP 403)             | ✅ Pass     |
+| **Search and Filtering**        | User searches for events by keyword                  | Matching events are displayed              | ✅ Pass     |
+|                                 | User filters matches by status                       | Matches are filtered correctly             | ✅ Pass     |
+| **Cloudinary Integration**      | Admin uploads an event image or team logo            | Image is stored on Cloudinary successfully | ✅ Pass     |
+| **API Endpoints**               | GET `/events/`                                       | List of all events is returned             | ✅ Pass     |
+|                                 | POST `/events/` (Admin only)                         | New event is created                       | ✅ Pass     |
+|                                 | GET `/matches/`                                      | List of all matches is returned            | ✅ Pass     |
+|                                 | PUT `/matches/<id>/`                                 | Match details are updated                  | ✅ Pass     |
+|                                 | DELETE `/players/<id>/`                              | Player is removed successfully             | ✅ Pass     |
 
 ---
 
 ## **Technologies and Tools Used**
-- **Django REST Framework**: For building the API.
-- **PostgreSQL**: The relational database used to store project data.
-- **Heroku**: For deployment.
-- **Git**: For version control.
+
+- **Django**: Backend framework
+- **Django REST Framework**: API development
+- **PostgreSQL**: Database
+- **Cloudinary**: Media storage
+- **Heroku**: Deployment platform
+- **Gunicorn**: WSGI server for production
+- **Whitenoise**: Serves static files in production
 
 ---
 
 ## **Deployment**
 
-The project is deployed to **Heroku** with both the frontend and backend accessible for full application use.
+The API is deployed on **Heroku**.
+
+To deploy the project:
+1. Set up a Heroku app.
+2. Add environment variables in the Heroku dashboard.
+3. Push the code to Heroku:
+
+```bash
+git push heroku main
+```
 
 ---
 
 ## **Cloning and Forking**
 
 ### **Cloning**
+
 1. Clone the repository:
    ```bash
    git clone <repository_url>
    ```
-2. Navigate to the project folder:
+
+2. Navigate to the project directory:
    ```bash
-   cd GG-EZ-API-main
+   cd GG-EZ-API
    ```
 
 ### **Forking**
-1. On GitHub, navigate to the repository.
-2. Click **Fork** in the top-right corner.
-3. Create a fork under your account.
+
+1. On GitHub, click **Fork** at the top-right corner.
+2. Follow the steps to create a fork under your GitHub account.
 
 ---
 
 ## **Credits**
 
-- &&&
+- **Django Documentation**: Guidance on API best practices.
+- **Cloudinary**: For efficient media management.
+- **Heroku**: For seamless deployment and hosting.
+- **Bootstrap**: For styling in frontend development.
