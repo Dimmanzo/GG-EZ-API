@@ -1,26 +1,51 @@
 # Python
 __pycache__/
 *.py[cod]
+*.pyo
+*.pyd
+*.db
+*.sqlite3
+*.log
 
 # Virtual Environment
 venv/
 env/
+.venv/
+.env/
 
 # Environment variables
+.env
+.env.*
 env.py
-
-# Database
-*.sqlite3
-
-# Logs
-*.log
 
 # Django static and media files
 staticfiles/
+media/
+
+# Logs
+*.log
+logs/
+
+# Database
+db.sqlite3
+*.sqlite3
 
 # Miscellaneous
 *.bak
 *.swp
+*.tmp
+*.old
 
-# Ignore node_modules folder
-node_modules/
+# IDEs and Editors
+.vscode/
+.idea/
+*.iml
+
+# macOS system files
+.DS_Store
+
+# Coverage reports
+htmlcov/
+.coverage
+*.cover
+*.py,cover

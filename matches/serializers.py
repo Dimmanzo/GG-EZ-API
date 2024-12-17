@@ -7,9 +7,15 @@ from events.serializers import EventSerializer
 
 
 class MatchSerializer(serializers.ModelSerializer):
+    """
+    Serializer for listing matches with additional event and team information.
+    Includes event names and team names for better readability on the frontend.
+    """
     event = serializers.PrimaryKeyRelatedField(queryset=Event.objects.all())
     team1 = serializers.PrimaryKeyRelatedField(queryset=Team.objects.all())
     team2 = serializers.PrimaryKeyRelatedField(queryset=Team.objects.all())
+
+    # Additional fields for easier access to related names
     scheduled_time = serializers.SerializerMethodField()
     event_name = serializers.SerializerMethodField()
     team1_name = serializers.SerializerMethodField()
@@ -18,7 +24,7 @@ class MatchSerializer(serializers.ModelSerializer):
     class Meta:
         model = Match
         fields = [
-            'id', 'event', 'event_name', 'team1', 'team1_name', 
+            'id', 'event', 'event_name', 'team1', 'team1_name',
             'team2', 'team2_name', 'scheduled_time', 'result', 'status'
         ]
 
@@ -34,7 +40,11 @@ class MatchSerializer(serializers.ModelSerializer):
     def get_scheduled_time(self, obj):
         return obj.scheduled_time.strftime('%Y-%m-%d %H:%M:%S')
 
+
 class MatchCreateSerializer(serializers.ModelSerializer):
+    """
+    Serializer for creating a new match.
+    """
     event = serializers.PrimaryKeyRelatedField(queryset=Event.objects.all())
     team1 = serializers.PrimaryKeyRelatedField(queryset=Team.objects.all())
     team2 = serializers.PrimaryKeyRelatedField(queryset=Team.objects.all())
@@ -43,7 +53,11 @@ class MatchCreateSerializer(serializers.ModelSerializer):
         model = Match
         fields = ['id', 'event', 'team1', 'team2', 'scheduled_time', 'status']
 
+
 class MatchDetailSerializer(serializers.ModelSerializer):
+    """
+    Serializer for detailed match view with team and event names.
+    """
     event_name = serializers.SerializerMethodField()
     team1_name = serializers.SerializerMethodField()
     team2_name = serializers.SerializerMethodField()
@@ -52,7 +66,7 @@ class MatchDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = Match
         fields = [
-            'id', 'event', 'event_name', 'team1', 'team1_name', 
+            'id', 'event', 'event_name', 'team1', 'team1_name',
             'team2', 'team2_name', 'scheduled_time', 'result', 'status'
         ]
 

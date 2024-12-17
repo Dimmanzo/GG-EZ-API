@@ -3,6 +3,7 @@ from django.contrib.auth.admin import UserAdmin
 from .models import CustomUser
 
 
+# Register the Custom user role in the admin panel.
 @admin.register(CustomUser)
 class CustomUserAdmin(UserAdmin):
     model = CustomUser

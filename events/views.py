@@ -9,33 +9,40 @@ from .serializers import EventSerializer
 
 class EventsView(generics.ListCreateAPIView):
     """
-    List all events ordered by start date or create new events if logged in as admin.
+    Handles listing all events and creating a new event.
     """
     serializer_class = EventSerializer
     queryset = Event.objects.all().order_by('start_date')
     permission_classes = [IsStaffOrReadOnly]
 
-    # Filtering, searching, ordering
+    # Filtering, searching, and ordering settings
     filter_backends = [
         DjangoFilterBackend,
         filters.SearchFilter,
         filters.OrderingFilter,
     ]
 
-    # Filter fields
+    # Searchable fields
     search_fields = ['name', 'description', 'start_date', 'end_date']
+    # Fields that can be used for ordering
     ordering_fields = ['start_date', 'end_date']
+
 
 class EventDetailView(generics.RetrieveUpdateDestroyAPIView):
     """
-    Show details of a specific event by ID.
+    Handles retrieving, updating, or deleting a single event.
     """
     serializer_class = EventSerializer
     queryset = Event.objects.all()
     permission_classes = [IsStaffOrReadOnly]
 
     def get_object(self):
+        """
+        Retrieve a single event by ID.
+        """
         try:
             return self.queryset.get(pk=self.kwargs['pk'])
         except Event.DoesNotExist:
-            raise NotFound(detail="No event found with the given ID.", code=404)
+            raise NotFound(
+                detail="No event found with the given ID.", code=404
+            )

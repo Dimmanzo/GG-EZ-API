@@ -7,8 +7,18 @@ from django.contrib.contenttypes.models import ContentType
 
 
 class CustomUser(AbstractUser):
+    """
+    Custom user model extending Django's AbstractUser.
+    Adds a 'role' field to differentiate between user roles.
+    """
+    # Choices for user roles
     ROLE_CHOICES = (
         ('default_user', 'Default User'),
         ('staff_user', 'Staff User'),
     )
-    role = models.CharField(max_length=20, choices=ROLE_CHOICES, default='default_user')
+
+    role = models.CharField(
+        max_length=20,
+        choices=ROLE_CHOICES,
+        default='default_user'
+    )
