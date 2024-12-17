@@ -17,7 +17,7 @@ The API is secure, scalable, and built with **Django** and **Django REST Framewo
 
 This backend API supports:
 - **Event Management**: Manage details of esports tournaments and matches.
-- **Team and Player Data**: Retrieve team profiles and player statistics.
+- **Team and Player Data**: Retrieve team profiles and **player statistics** - (Future feature).
 - **User Roles**: Admin users can create and modify events, while general users can browse event data.
 - **Search and Filter**: Easily find specific events or teams using filters and keywords.
 
@@ -97,14 +97,18 @@ GG-EZ-API/
 ## **User Stories**
 
 ### **Admin User**
-- As an admin, I can manage events, teams, and players to keep the information up-to-date.
-- As an admin, I can delete outdated matches to maintain data accuracy.
+- As an admin, I can **create, update, and delete events** so that the platform has up-to-date tournament information for users to view.  
+- As an admin, I can **manage matches**, including adding schedules, updating results, and removing outdated matches to maintain accurate and relevant data.  
+- As an admin, I can **add and manage teams**, including their descriptions and logos, to ensure the teams' profiles are complete and professional.  
+- As an admin, I can **create and manage player profiles**, including assigning them to teams and defining their roles, so users have detailed information about players.  
 
 ### **General User**
-- As a user, I can view a list of all esports events and match schedules.
-- As a user, I can view details about my favorite teams and players.
+- As a user, I can **browse a list of esports events** and filter by date or name so that I can easily find tournaments I’m interested in.  
+- As a user, I can **view match schedules and results** to stay updated on ongoing and upcoming competitions.  
+- As a user, I can **view detailed information about teams**, including their name, logo, and players, to learn more about the teams I follow.  
+- As a user, I can **view player profiles**, including their names, roles, and assigned teams, to understand their contributions to the tournaments.  
 
----
+--- 
 
 ## **Database Schema**
 
@@ -201,6 +205,19 @@ Below is a detailed table summarizing manual tests performed for **events**, **m
 
 ---
 
+## **Code Validation**
+
+All code was tested with **CI Python Linter** to ensure compliance with PEP8 standards. No significant issues were detected.
+
+- **Models**: Verified for consistent naming conventions and clean logic.  
+- **Serializers**: Ensured proper validation and field handling.  
+- **Views**: Checked for proper use of DRF class-based views, query optimizations, and error handling.  
+- **URLs and Permissions**: Confirmed logical routing and secure access control implementation.  
+
+The project meets Python coding standards, ensuring maintainable, clean, and readable code.
+
+---
+
 ## **Technologies and Tools Used**
 
 - **Django**: Backend framework
@@ -228,24 +245,26 @@ git push heroku main
 
 ---
 
-## **Cloning and Forking**
+## Cloning and Forking
 
-### **Cloning**
+### Cloning
 
-1. Clone the repository:
-   ```bash
-   git clone <repository_url>
-   ```
+To clone the repository:
 
-2. Navigate to the project directory:
-   ```bash
-   cd GG-EZ-API
-   ```
+- On GitHub.com, navigate to the main page of the repository.
+- Above the list of files, click **Code**.
+- Copy the URL for the repository.
+- Type `git clone`, and then paste the URL you copied earlier.
+- Press **Enter** to create your local clone.
 
-### **Forking**
+### Forking
 
-1. On GitHub, click **Fork** at the top-right corner.
-2. Follow the steps to create a fork under your GitHub account.
+To fork the repository:
+
+- On GitHub.com, navigate to the main page of the repository.
+- In the top-right corner of the page, click **Fork**.
+- Under "Owner," select the dropdown menu and click an owner for the forked repository.
+- Click **Create Fork**.
 
 ---
 
