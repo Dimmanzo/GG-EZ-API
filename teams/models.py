@@ -1,3 +1,4 @@
+from django.core.exceptions import ValidationError
 from django.db import models
 from cloudinary.models import CloudinaryField
 
@@ -11,13 +12,20 @@ class Team(models.Model):
     Team with a name, description, and logo.
     """
     name = models.CharField(max_length=255)
-    description = models.TextField(blank=True, null=True)
+    description = models.TextField()
     logo = CloudinaryField('image', blank=True, null=True)
+
+    def clean(self):
+        if not self.name.strip():
+            raise ValidationError("Team name cannot be blank.")
+        if self.description and len(self.description.strip()) < 10:
+            raise ValidationError("Description must be at least 10 characters long if provided.")
 
     def save(self, *args, **kwargs):
         """
         Override save method to set a default logo if none is provided.
         """
+        self.clean()
         if not self.logo:
             self.logo = DEFAULT_TEAM_LOGO
         super().save(*args, **kwargs)
@@ -41,10 +49,17 @@ class Player(models.Model):
         related_name="players"
     )
 
+    def clean(self):
+        if not self.name.strip():
+            raise ValidationError("Player name cannot be blank.")
+        if not self.role.strip():
+            raise ValidationError("Player role cannot be blank.")
+
     def save(self, *args, **kwargs):
         """
         Override save method to set a default avatar if none is provided.
         """
+        self.clean()
         if not self.avatar:
             self.avatar = DEFAULT_PLAYER_AVATAR
         super().save(*args, **kwargs)

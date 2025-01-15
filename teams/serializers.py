@@ -22,13 +22,20 @@ class PlayerSerializer(serializers.ModelSerializer):
         """
         return obj.team.name if obj.team else "Unassigned"
 
+    def validate_name(self, value):
+        if not value.strip():
+            raise serializers.ValidationError("Player name cannot be blank.")
+        return value
+
+    def validate_role(self, value):
+        if not value.strip():
+            raise serializers.ValidationError("Player role cannot be blank.")
+        return value
+
     def validate_avatar(self, value):
-        """
-        Validates the 'avatar' field to ensure it's a valid URL or null.
-        """
-        if isinstance(value, str) and value.startswith("http"):
+        if not value or value in [None, ""]:
             return value
-        if value is None:
+        if isinstance(value, str) and value.startswith("http"):
             return value
         raise serializers.ValidationError(
             "Invalid avatar format. Provide a valid URL."
@@ -48,14 +55,28 @@ class TeamSerializer(serializers.ModelSerializer):
         model = Team
         fields = ['id', 'name', 'description', 'logo', 'players']
 
+    def validate_name(self, value):
+        if not value.strip():
+            raise serializers.ValidationError("Team name cannot be blank.")
+        return value
+
+    def validate_description(self, value):
+        if not value or not value.strip():
+            raise serializers.ValidationError("Team description cannot be blank.")
+        if len(value) < 10:
+            raise serializers.ValidationError(
+                "Team description must be at least 10 characters long."
+            )
+        return value
+
     def validate_logo(self, value):
         """
-        Validates the 'logo' field to ensure it's a valid URL or null.
+        Validates the 'logo' field to ensure it's a valid URL, null, or blank.
         """
+        if not value or value in [None, ""]:
+            return value  # Allow blank or null values; the model's save() will handle defaults.
         if isinstance(value, str) and value.startswith("http"):
-            return value  # Accept valid URLs
-        if value is None:
-            return value  # Allow null values
+            return value  # Accept valid URLs starting with 'http'.
         raise serializers.ValidationError(
             "Invalid logo format. Provide a valid URL."
         )
