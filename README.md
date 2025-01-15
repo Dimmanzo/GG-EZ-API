@@ -657,7 +657,12 @@ To fork the repository:
 
 ## **Credits**
 
+- **Code Institute**: For providing a comprehensive walkthrough project that helped significantly in building and structuring this application.
 - **Django Documentation**: Guidance on API best practices.
 - **Cloudinary**: For efficient media management.
 - **Heroku**: For seamless deployment and hosting.
 - **Bootstrap**: For styling in frontend development.
+- **Django REST Framework Documentation**: Comprehensive resources for building RESTful APIs with Django.
+- **PostgreSQL Documentation**: Official documentation for PostgreSQL database setup and management.
+- **Gunicorn Documentation**: For configuring Gunicorn as the WSGI server in production environments.
+- **Whitenoise Documentation**: Instructions for serving static files in production with Django.
