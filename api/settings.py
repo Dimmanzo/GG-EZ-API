@@ -140,7 +140,8 @@ REST_FRAMEWORK = {
 }
 
 if not DEBUG:
-    REST_FRAMEWORK['DEFAULT_RENDERER_CLASSES'] = ['rest_framework.renderers.JSONRenderer']
+    REST_FRAMEWORK['DEFAULT_RENDERER_CLASSES'] = [
+        'rest_framework.renderers.JSONRenderer']
 
 # JWT configuration
 REST_USE_JWT = True

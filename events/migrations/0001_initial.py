@@ -14,12 +14,14 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Event',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.BigAutoField(auto_created=True,
+                 primary_key=True, serialize=False, verbose_name='ID')),
                 ('name', models.CharField(max_length=255)),
                 ('description', models.TextField(blank=True, null=True)),
                 ('start_date', models.DateField()),
                 ('end_date', models.DateField()),
-                ('image', models.ImageField(blank=True, null=True, upload_to='', verbose_name='image')),
+                ('image', models.ImageField(blank=True,
+                 null=True, upload_to='', verbose_name='image')),
             ],
         ),
     ]

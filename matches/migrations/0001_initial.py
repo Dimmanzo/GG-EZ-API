@@ -17,13 +17,18 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Match',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.BigAutoField(auto_created=True,
+                 primary_key=True, serialize=False, verbose_name='ID')),
                 ('scheduled_time', models.DateTimeField()),
                 ('result', models.CharField(blank=True, max_length=255, null=True)),
-                ('status', models.CharField(choices=[('upcoming', 'Upcoming'), ('in_progress', 'In Progress'), ('completed', 'Completed')], default='upcoming', max_length=20)),
-                ('event', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='matches', to='events.event')),
-                ('team1', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='team1_matches', to='teams.team')),
-                ('team2', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='team2_matches', to='teams.team')),
+                ('status', models.CharField(choices=[('upcoming', 'Upcoming'), ('in_progress', 'In Progress'), (
+                    'completed', 'Completed')], default='upcoming', max_length=20)),
+                ('event', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE,
+                 related_name='matches', to='events.event')),
+                ('team1', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE,
+                 related_name='team1_matches', to='teams.team')),
+                ('team2', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE,
+                 related_name='team2_matches', to='teams.team')),
             ],
             options={
                 'verbose_name_plural': 'Matches',

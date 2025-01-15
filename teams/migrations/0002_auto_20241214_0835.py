@@ -14,11 +14,13 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='player',
             name='avatar',
-            field=cloudinary.models.CloudinaryField(blank=True, max_length=255, null=True, verbose_name='image'),
+            field=cloudinary.models.CloudinaryField(
+                blank=True, max_length=255, null=True, verbose_name='image'),
         ),
         migrations.AlterField(
             model_name='team',
             name='logo',
-            field=cloudinary.models.CloudinaryField(blank=True, max_length=255, null=True, verbose_name='image'),
+            field=cloudinary.models.CloudinaryField(
+                blank=True, max_length=255, null=True, verbose_name='image'),
         ),
     ]

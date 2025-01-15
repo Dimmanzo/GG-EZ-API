@@ -15,20 +15,25 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Team',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.BigAutoField(auto_created=True,
+                 primary_key=True, serialize=False, verbose_name='ID')),
                 ('name', models.CharField(max_length=255)),
                 ('description', models.TextField(blank=True, null=True)),
-                ('logo', models.ImageField(blank=True, null=True, upload_to='', verbose_name='image')),
+                ('logo', models.ImageField(blank=True,
+                 null=True, upload_to='', verbose_name='image')),
             ],
         ),
         migrations.CreateModel(
             name='Player',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.BigAutoField(auto_created=True,
+                 primary_key=True, serialize=False, verbose_name='ID')),
                 ('name', models.CharField(max_length=255)),
                 ('role', models.CharField(max_length=255)),
-                ('avatar', models.ImageField(blank=True, null=True, upload_to='', verbose_name='image')),
-                ('team', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='players', to='teams.team')),
+                ('avatar', models.ImageField(blank=True,
+                 null=True, upload_to='', verbose_name='image')),
+                ('team', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE,
+                 related_name='players', to='teams.team')),
             ],
         ),
     ]
