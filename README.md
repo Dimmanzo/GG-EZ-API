@@ -259,6 +259,7 @@ Before deploying, ensure you have the following:
 - A **Heroku account** ([Sign up here](https://signup.heroku.com/)).
 - **Git** installed on your machine.
 - **Heroku CLI** installed ([Download here](https://devcenter.heroku.com/articles/heroku-cli)).
+- **PostgreSQL** installed (for local development, Heroku provides this via an add-on).
 
 ---
 
@@ -267,13 +268,13 @@ Before deploying, ensure you have the following:
 You will need to configure the following environment variables for deployment:
 
 | Variable Name    | Description                                    | Example Value                                      |
-|-------------------|------------------------------------------------|--------------------------------------------------|
-| `SECRET_KEY`      | Django's secret key for cryptography          | `your-secret-key`                                |
-| `DEBUG`           | Enables/disables debug mode (use `False` for production) | `False`                                   |
-| `ALLOWED_HOSTS`   | Hosts allowed to connect to the application   | `your-app.herokuapp.com`                         |
-| `DATABASE_URL`    | PostgreSQL database URL                       | `postgres://username:password@host:port/dbname`  |
-| `CLOUDINARY_URL`  | Cloudinary configuration for media storage    | `cloudinary://api_key:api_secret@cloud_name`     |
-| `CLIENT_ORIGIN`   | Frontend URL (for CORS settings)              | `https://your-frontend-url.com`                  |
+|-------------------|------------------------------------------------|----------------------------------------------------|
+| `SECRET_KEY`      | Django's secret key for cryptography          | `your-secret-key`                                  |
+| `DEBUG`           | Enables/disables debug mode (use `False` for production) | `False`                                        |
+| `ALLOWED_HOSTS`   | Hosts allowed to connect to the application   | `your-app.herokuapp.com`                           |
+| `DATABASE_URL`    | PostgreSQL database URL                       | `postgres://username:password@host:port/dbname`     |
+| `CLOUDINARY_URL`  | Cloudinary configuration for media storage    | `cloudinary://api_key:api_secret@cloud_name`       |
+| `CLIENT_ORIGIN`   | Frontend URL (for CORS settings)              | `https://your-frontend-url.com`                    |
 
 #### **Example `.env` File for Local Development**
 To run the project locally, create a `.env` file in the root directory and add:
@@ -305,32 +306,48 @@ CLIENT_ORIGIN=http://localhost:3000
    heroku addons:create heroku-postgresql:hobby-dev
    ```
 
-4. **Push the Code to Heroku**:
+4. **Add Buildpacks** (if required for static file handling and Python):
+   ```bash
+   heroku buildpacks:add heroku/python
+   heroku buildpacks:add https://github.com/memcachier/heroku-buildpack-memcached.git
+   ```
+
+5. **Install Dependencies**:
+   Ensure all dependencies are installed:
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+6. **Push the Code to Heroku**:
    ```bash
    git add .
    git commit -m "Deploy to Heroku"
    git push heroku main
    ```
 
-5. **Set Environment Variables**:
+7. **Set Environment Variables**:
    - Go to the Heroku dashboard.
    - Select your app and navigate to **Settings > Config Vars**.
-   - Add the environment variables listed above.
+   - Add the environment variables listed above using this command:
+     ```bash
+     heroku config:set SECRET_KEY=your-secret-key
+     ```
 
-6. **Run Database Migrations**:
+8. **Run Database Migrations**:
    ```bash
    heroku run python manage.py migrate
    ```
 
-7. **Create a Superuser (Optional)**:
+9. **Create a Superuser (Optional)**:
    ```bash
    heroku run python manage.py createsuperuser
    ```
 
-8. **Collect Static Files**:
-   ```bash
-   heroku run python manage.py collectstatic --noinput
-   ```
+10. **Collect Static Files**:
+    Ensure that static files are collected using Whitenoise:
+    ```bash
+    heroku run python manage.py collectstatic --noinput
+    ```
 
 ---
 
@@ -380,6 +397,18 @@ If you prefer deploying the project through the Heroku website, follow these ste
 - Verify the following:
   - All API endpoints respond correctly.
   - Media uploads work via Cloudinary.
+  - The app is fully functional and free of errors.
+
+---
+
+### **Common Pitfalls & Troubleshooting**
+
+- **Heroku Build Failures**: If you encounter build failures, ensure all dependencies are correctly listed in `requirements.txt`. You can also try adding `whitenoise` for static files management.
+- **Missing Environment Variables**: Ensure all necessary environment variables (like `DATABASE_URL`, `SECRET_KEY`, `CLOUDINARY_URL`) are set correctly. You can check for missing variables with:
+  ```bash
+  heroku config
+  ```
+- **Database Errors**: If you encounter issues with migrations or database connections, verify your PostgreSQL configuration and ensure the correct version is being used.
 
 ---
 
