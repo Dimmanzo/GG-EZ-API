@@ -34,6 +34,7 @@ This backend API supports:
 - [Setup Instructions](#setup-instructions)
 - [Manual Testing](#manual-testing)
 - [Technologies and Tools Used](#technologies-and-tools-used)
+- [Dependencies](#dependencies)
 - [Deployment](#deployment)
 - [Cloning and Forking](#cloning-and-forking)
 - [Api Endpoints](#api-endpoints)
