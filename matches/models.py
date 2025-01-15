@@ -1,4 +1,6 @@
 from django.db import models
+from django.core.exceptions import ValidationError
+from django.utils.timezone import now
 from teams.models import Team
 from events.models import Event
 
@@ -44,6 +46,22 @@ class Match(models.Model):
 
     class Meta:
         verbose_name_plural = "Matches"
+
+    def clean(self):
+        """
+        Custom validation to ensure data integrity.
+        """
+        if self.team1 == self.team2:
+            raise ValidationError("Team1 and Team2 cannot be the same.")
+        if self.scheduled_time < now():
+            raise ValidationError("Scheduled time cannot be in the past.")
+
+    def save(self, *args, **kwargs):
+        """
+        Call clean() before saving to enforce custom validations.
+        """
+        self.clean()
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return f"{self.team1.name} vs {self.team2.name} ({self.status})"

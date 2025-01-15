@@ -1,3 +1,4 @@
+from django.utils.timezone import now
 from rest_framework import serializers
 from .models import Match
 from teams.models import Team
@@ -52,6 +53,16 @@ class MatchCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Match
         fields = ['id', 'event', 'team1', 'team2', 'scheduled_time', 'status']
+
+    def validate(self, data):
+        """
+        Custom validation for Match creation.
+        """
+        if data['team1'] == data['team2']:
+            raise serializers.ValidationError("Team1 and Team2 must be different.")
+        if data['scheduled_time'] < now():
+            raise serializers.ValidationError("Scheduled time cannot be in the past.")
+        return data
 
 
 class MatchDetailSerializer(serializers.ModelSerializer):
