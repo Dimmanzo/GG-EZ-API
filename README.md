@@ -87,7 +87,16 @@ GG-EZ-API/
   View team profiles, player names, and roles.
 
 - **User Authentication**:  
-  Role-based access ensures admins have more control while general users can only view data.
+  - Role-based access ensures admins have more control while general users can only view data.
+  - **Password Policy**:
+    - **Minimum Length**: 8 characters.
+    - **Must Include**:
+      - At least **1 uppercase letter** (A-Z).
+      - At least **1 lowercase letter** (a-z).
+      - At least **1 digit** (0-9).
+      - At least **1 special character** (e.g., `@`, `$`, `!`, `%`, `*`, `?`, `&`).
+    - **Passwords Must Match**: During registration, both `password1` and `password2` must match.
+    - Clear error messages are provided if the password does not meet these criteria.
 
 - **Search and Filtering**:  
   Find events, teams, and matches with keyword search and filters.
