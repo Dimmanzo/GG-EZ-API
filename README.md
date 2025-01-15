@@ -36,7 +36,9 @@ This backend API supports:
 - [Technologies and Tools Used](#technologies-and-tools-used)
 - [Deployment](#deployment)
 - [Cloning and Forking](#cloning-and-forking)
+- [Api Endpoints](#api-endpoints)
 - [Credits](#credits)
+
 
 ---
 
@@ -401,6 +403,184 @@ To fork the repository:
 - In the top-right corner of the page, click **Fork**.
 - Under "Owner," select the dropdown menu and click an owner for the forked repository.
 - Click **Create Fork**.
+
+---
+
+## **API Endpoints**
+
+### **Events Endpoints**
+1. **GET** `/events/`  
+   - Retrieves a list of all events.
+   - **Response**: List of events in JSON format.
+   
+2. **POST** `/events/` (Admin Only)  
+   - Create a new event.  
+   - **Required Payload**:  
+     ```json
+     {
+       "name": "Event Name",
+       "description": "Event Description",
+       "start_date": "YYYY-MM-DD",
+       "end_date": "YYYY-MM-DD",
+       "image": "optional_image_url"
+     }
+     ```
+   - **Response**: Event object in JSON format.
+
+3. **GET** `/events/{id}/`  
+   - Retrieves a specific event by ID.
+   - **Response**: Event object in JSON format.
+
+4. **PUT** `/events/{id}/` (Admin Only)  
+   - Update an event by ID.
+   - **Required Payload**: Updated event data.
+   - **Response**: Updated event object in JSON format.
+
+5. **DELETE** `/events/{id}/` (Admin Only)  
+   - Delete an event by ID.
+   - **Response**: Success message.
+
+---
+
+### **Matches Endpoints**
+1. **GET** `/matches/`  
+   - Retrieves a list of all matches.
+   - **Response**: List of match objects in JSON format.
+
+2. **POST** `/matches/` (Admin Only)  
+   - Create a new match.
+   - **Required Payload**:  
+     ```json
+     {
+       "event": "event_id",
+       "team1": "team1_id",
+       "team2": "team2_id",
+       "scheduled_time": "YYYY-MM-DD HH:MM:SS",
+       "status": "upcoming"
+     }
+     ```
+   - **Response**: Match object in JSON format.
+
+3. **GET** `/matches/{id}/`  
+   - Retrieve a specific match by ID.
+   - **Response**: Match object in JSON format.
+
+4. **PUT** `/matches/{id}/` (Admin Only)  
+   - Update a match by ID.
+   - **Required Payload**: Updated match data.
+   - **Response**: Updated match object in JSON format.
+
+5. **DELETE** `/matches/{id}/` (Admin Only)  
+   - Delete a match by ID.
+   - **Response**: Success message.
+
+---
+
+### **Teams Endpoints**
+1. **GET** `/teams/`  
+   - Retrieves a list of all teams.
+   - **Response**: List of team objects in JSON format.
+
+2. **POST** `/teams/` (Admin Only)  
+   - Create a new team.
+   - **Required Payload**:  
+     ```json
+     {
+       "name": "Team Name",
+       "description": "Team Description",
+       "logo": "optional_logo_url"
+     }
+     ```
+   - **Response**: Team object in JSON format.
+
+3. **GET** `/teams/{id}/`  
+   - Retrieves a specific team by ID.
+   - **Response**: Team object in JSON format.
+
+4. **PUT** `/teams/{id}/` (Admin Only)  
+   - Update a team by ID.
+   - **Required Payload**: Updated team data.
+   - **Response**: Updated team object in JSON format.
+
+5. **DELETE** `/teams/{id}/` (Admin Only)  
+   - Delete a team by ID.
+   - **Response**: Success message.
+
+---
+
+### **Player Endpoints**
+1. **GET** `/players/`  
+   - Retrieves a list of all players.
+   - **Response**: List of player objects in JSON format.
+
+2. **POST** `/players/` (Admin Only)  
+   - Create a new player.
+   - **Required Payload**:  
+     ```json
+     {
+       "name": "Player Name",
+       "role": "Player Role",
+       "team": "team_id",
+       "avatar": "optional_avatar_url"
+     }
+     ```
+   - **Response**: Player object in JSON format.
+
+3. **GET** `/players/{id}/`  
+   - Retrieve a specific player by ID.
+   - **Response**: Player object in JSON format.
+
+4. **PUT** `/players/{id}/` (Admin Only)  
+   - Update a player by ID.
+   - **Required Payload**: Updated player data.
+   - **Response**: Updated player object in JSON format.
+
+5. **DELETE** `/players/{id}/` (Admin Only)  
+   - Delete a player by ID.
+   - **Response**: Success message.
+
+---
+
+### **User Authentication Endpoints**
+1. **POST** `/dj-rest-auth/registration/`  
+   - Register a new user.
+   - **Required Payload**:  
+     ```json
+     {
+       "username": "username",
+       "email": "user@example.com",
+       "role": "default_user or staff_user",
+       "password1": "password",
+       "password2": "password"
+     }
+     ```
+   - **Response**: User object in JSON format.
+
+2. **POST** `/dj-rest-auth/login/`  
+   - User login.
+   - **Required Payload**:  
+     ```json
+     {
+       "username": "username",
+       "password": "password"
+     }
+     ```
+   - **Response**: Auth token in JSON format.
+
+3. **POST** `/dj-rest-auth/logout/`  
+   - Logout the user.
+   - **Response**: Success message.
+
+4. **GET** `/current-user-role/`  
+   - Get current user's role.
+   - **Response**: Current user's details in JSON format.
+
+---
+
+### **Notes**  
+- **Response Format**: All responses will be in JSON format, unless specified otherwise.
+- **Authentication**: Some endpoints (e.g., creating or deleting) require admin-level access. Use JWT for authentication.
+- **Filtering and Searching**: Filtering is available for events, matches, and teams. You can filter by various fields such as name, date, status, etc.
 
 ---
 
