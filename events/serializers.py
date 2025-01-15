@@ -10,7 +10,15 @@ class EventSerializer(serializers.ModelSerializer):
         required=False,
         allow_null=True,
         allow_blank=True
-    )  # Custom field to accept optional image URLs
+    ),  # Custom field to accept optional image URLs
+    description = serializers.CharField(
+        required=True,
+        allow_blank=False,
+        error_messages={
+            "blank": "Event description cannot be blank.",
+            "required": "Event description is required."
+        }
+    )
 
     class Meta:
         model = Event
@@ -18,16 +26,28 @@ class EventSerializer(serializers.ModelSerializer):
             'id', 'name', 'description', 'start_date', 'end_date', 'image'
         ]
 
+    # Validation for 'name'
+    def validate_name(self, value):
+        if not value.strip():
+            raise serializers.ValidationError("Event name cannot be blank.")
+        if len(value) < 3:
+            raise serializers.ValidationError("Event name must be at least 3 characters long.")
+        return value
+
+    # Validation for start_date and end_date
+    def validate(self, data):
+        if 'start_date' in data and 'end_date' in data:
+            if data['start_date'] > data['end_date']:
+                raise serializers.ValidationError(
+                    {"end_date": "End date must be after the start date."}
+                )
+        return data
+
     def validate_image(self, value):
-        """
-        Custom validator for the 'image' field.
-        Ensures that the image is either a valid URL or left empty.
-        """
+        if value in [None, ""]:
+            return value  # Allow blank or null values; the model's save() will handle defaults.
         if isinstance(value, str) and value.startswith("http"):
-            return value  # Accept URLs starting with 'http'
-        if value is None:
-            return value  # Allow null values for the image field
+            return value  # Accept valid URLs starting with 'http'.
         raise serializers.ValidationError(
             "Invalid image format. Provide a valid URL."
         )
-        # Raises an error if the input is not a valid URL or empty

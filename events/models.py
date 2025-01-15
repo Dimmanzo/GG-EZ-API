@@ -10,7 +10,7 @@ class Event(models.Model):
     Event with details such as name, description, dates, and an optional image.
     """
     name = models.CharField(max_length=255)
-    description = models.TextField(blank=True, null=True)
+    description = models.TextField(null=False)
     start_date = models.DateField()
     end_date = models.DateField()
     image = CloudinaryField('image', blank=True, null=True)
