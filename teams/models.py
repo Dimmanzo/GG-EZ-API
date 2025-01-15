@@ -19,7 +19,9 @@ class Team(models.Model):
         if not self.name.strip():
             raise ValidationError("Team name cannot be blank.")
         if self.description and len(self.description.strip()) < 10:
-            raise ValidationError("Description must be at least 10 characters long if provided.")
+            raise ValidationError(
+                "Description must be at least 10 characters long if provided."
+            )
 
     def save(self, *args, **kwargs):
         """

@@ -7,7 +7,7 @@ class IsStaffOrReadOnly(BasePermission):
     Read-only permissions for others, including anonymous users.
     """
     message = "You do not have permission to perform this action."
-    
+
     def has_permission(self, request, view):
         if request.method in SAFE_METHODS:
             return True

@@ -31,7 +31,9 @@ class EventSerializer(serializers.ModelSerializer):
         if not value.strip():
             raise serializers.ValidationError("Event name cannot be blank.")
         if len(value) < 3:
-            raise serializers.ValidationError("Event name must be at least 3 characters long.")
+            raise serializers.ValidationError(
+                "Event name must be at least 3 characters long."
+            )
         return value
 
     # Validation for start_date and end_date
@@ -45,7 +47,7 @@ class EventSerializer(serializers.ModelSerializer):
 
     def validate_image(self, value):
         if value in [None, ""]:
-            return value  # Allow blank or null values; the model's save() will handle defaults.
+            return value  # Allow blank or null values.
         if isinstance(value, str) and value.startswith("http"):
             return value  # Accept valid URLs starting with 'http'.
         raise serializers.ValidationError(

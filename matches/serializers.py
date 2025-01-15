@@ -59,9 +59,13 @@ class MatchCreateSerializer(serializers.ModelSerializer):
         Custom validation for Match creation.
         """
         if data['team1'] == data['team2']:
-            raise serializers.ValidationError("Team1 and Team2 must be different.")
+            raise serializers.ValidationError(
+                "Team1 and Team2 must be different."
+            )
         if data['scheduled_time'] < now():
-            raise serializers.ValidationError("Scheduled time cannot be in the past.")
+            raise serializers.ValidationError(
+                "Scheduled time cannot be in the past."
+            )
         return data
 
 

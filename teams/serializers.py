@@ -62,7 +62,9 @@ class TeamSerializer(serializers.ModelSerializer):
 
     def validate_description(self, value):
         if not value or not value.strip():
-            raise serializers.ValidationError("Team description cannot be blank.")
+            raise serializers.ValidationError(
+                "Team description cannot be blank."
+            )
         if len(value) < 10:
             raise serializers.ValidationError(
                 "Team description must be at least 10 characters long."
@@ -74,7 +76,7 @@ class TeamSerializer(serializers.ModelSerializer):
         Validates the 'logo' field to ensure it's a valid URL, null, or blank.
         """
         if not value or value in [None, ""]:
-            return value  # Allow blank or null values; the model's save() will handle defaults.
+            return value  # Allow blank or null values.
         if isinstance(value, str) and value.startswith("http"):
             return value  # Accept valid URLs starting with 'http'.
         raise serializers.ValidationError(
