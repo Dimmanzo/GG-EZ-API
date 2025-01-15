@@ -239,16 +239,136 @@ The project meets Python coding standards, ensuring maintainable, clean, and rea
 
 ## **Deployment**
 
-The API is deployed on **Heroku**.
+The GG-EZ API is deployed on **Heroku**. Below is a step-by-step guide for deploying the project to Heroku using both the CLI and the Heroku website.
 
-To deploy the project:
-1. Set up a Heroku app.
-2. Add environment variables in the Heroku dashboard.
-3. Push the code to Heroku:
+---
 
-```bash
-git push heroku main
+### **1. Prerequisites**
+Before deploying, ensure you have the following:
+- A **Heroku account** ([Sign up here](https://signup.heroku.com/)).
+- **Git** installed on your machine.
+- **Heroku CLI** installed ([Download here](https://devcenter.heroku.com/articles/heroku-cli)).
+
+---
+
+### **2. Set Environment Variables**
+
+You will need to configure the following environment variables for deployment:
+
+| Variable Name    | Description                                    | Example Value                                      |
+|-------------------|------------------------------------------------|--------------------------------------------------|
+| `SECRET_KEY`      | Django's secret key for cryptography          | `your-secret-key`                                |
+| `DEBUG`           | Enables/disables debug mode (use `False` for production) | `False`                                   |
+| `ALLOWED_HOSTS`   | Hosts allowed to connect to the application   | `your-app.herokuapp.com`                         |
+| `DATABASE_URL`    | PostgreSQL database URL                       | `postgres://username:password@host:port/dbname`  |
+| `CLOUDINARY_URL`  | Cloudinary configuration for media storage    | `cloudinary://api_key:api_secret@cloud_name`     |
+| `CLIENT_ORIGIN`   | Frontend URL (for CORS settings)              | `https://your-frontend-url.com`                  |
+
+#### **Example `.env` File for Local Development**
+To run the project locally, create a `.env` file in the root directory and add:
+```plaintext
+SECRET_KEY=your-secret-key
+DEBUG=True
+ALLOWED_HOSTS=127.0.0.1,localhost
+DATABASE_URL=your-database-url
+CLOUDINARY_URL=cloudinary://api_key:api_secret@cloud_name
+CLIENT_ORIGIN=http://localhost:3000
 ```
+
+---
+
+### **3. Deployment Steps on Heroku (CLI)**
+
+1. **Log in to Heroku**:
+   ```bash
+   heroku login
+   ```
+
+2. **Create a Heroku App**:
+   ```bash
+   heroku create your-app-name
+   ```
+
+3. **Add Heroku Postgres Add-on**:
+   ```bash
+   heroku addons:create heroku-postgresql:hobby-dev
+   ```
+
+4. **Push the Code to Heroku**:
+   ```bash
+   git add .
+   git commit -m "Deploy to Heroku"
+   git push heroku main
+   ```
+
+5. **Set Environment Variables**:
+   - Go to the Heroku dashboard.
+   - Select your app and navigate to **Settings > Config Vars**.
+   - Add the environment variables listed above.
+
+6. **Run Database Migrations**:
+   ```bash
+   heroku run python manage.py migrate
+   ```
+
+7. **Create a Superuser (Optional)**:
+   ```bash
+   heroku run python manage.py createsuperuser
+   ```
+
+8. **Collect Static Files**:
+   ```bash
+   heroku run python manage.py collectstatic --noinput
+   ```
+
+---
+
+### **4. Deployment via Heroku Website (Optional)**
+
+If you prefer deploying the project through the Heroku website, follow these steps:
+
+1. **Log in to Heroku**:
+   - Visit [Heroku](https://www.heroku.com/) and log in to your account.
+
+2. **Create a New App**:
+   - Navigate to the **Dashboard** and click **New > Create New App**.
+   - Enter a name for your app (e.g., `gg-ez-api`) and choose your region.
+
+3. **Connect Your GitHub Repository**:
+   - Go to the **Deploy** tab in your app settings.
+   - Under **Deployment Method**, select **GitHub**.
+   - Search for your repository and connect it.
+
+4. **Enable Automatic Deploys (Optional)**:
+   - Once your repository is connected, you can enable **Automatic Deploys** from the main branch to streamline future updates.
+
+5. **Manually Deploy the App**:
+   - Scroll down to the **Manual Deploy** section and click **Deploy Branch** to deploy your app.
+
+6. **Set Environment Variables**:
+   - Go to the **Settings** tab and click **Reveal Config Vars**.
+   - Add all required variables (e.g., `SECRET_KEY`, `DATABASE_URL`).
+
+7. **Run Migrations**:
+   - Open the **More > Run Console** option in the top-right corner.
+   - Run the following commands:
+     ```bash
+     python manage.py migrate
+     python manage.py createsuperuser  # Optional
+     python manage.py collectstatic --noinput
+     ```
+
+---
+
+### **5. Testing the Deployment**
+
+- Access your app using the Heroku URL:
+  ```
+  https://your-app-name.herokuapp.com
+  ```
+- Verify the following:
+  - All API endpoints respond correctly.
+  - Media uploads work via Cloudinary.
 
 ---
 
