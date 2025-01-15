@@ -166,9 +166,9 @@ Access the API at `http://127.0.0.1:8000/`.
 
 ---
 
-## **Manual Testing**
+### **Manual Testing**
 
-Below is a detailed table summarizing manual tests performed for **events**, **matches**, **teams**, **players**, and **users**.
+Below is a detailed table summarizing manual tests performed for **events**, **matches**, **teams**, **players**, **users**, and **authentication endpoints**.
 
 | **Feature**                     | **Test Case**                                         | **Expected Outcome**                        | **Result** |
 |---------------------------------|------------------------------------------------------|--------------------------------------------|------------|
@@ -190,7 +190,10 @@ Below is a detailed table summarizing manual tests performed for **events**, **m
 |                                 | User views player details                            | Player details (name, role, team) displayed| ✅ Pass     |
 | **User Authentication**         | User registers with valid credentials                | Account is created successfully            | ✅ Pass     |
 |                                 | User registers with mismatching passwords            | Validation error is returned               | ✅ Pass     |
+|                                 | User registers with a short username                 | Validation error is returned               | ✅ Pass     |
+|                                 | User registers with a weak password                  | Validation error is returned               | ✅ Pass     |
 |                                 | User logs in with correct credentials                | User is authenticated and logged in        | ✅ Pass     |
+|                                 | User logs in with incorrect credentials              | Validation error is returned               | ✅ Pass     |
 |                                 | User logs out                                        | User session is cleared                    | ✅ Pass     |
 |                                 | Admin attempts restricted action (delete player)     | Action is allowed                          | ✅ Pass     |
 |                                 | User attempts restricted action (delete player)      | Action is forbidden (HTTP 403)             | ✅ Pass     |
@@ -202,6 +205,10 @@ Below is a detailed table summarizing manual tests performed for **events**, **m
 |                                 | GET `/matches/`                                      | List of all matches is returned            | ✅ Pass     |
 |                                 | PUT `/matches/<id>/`                                 | Match details are updated                  | ✅ Pass     |
 |                                 | DELETE `/players/<id>/`                              | Player is removed successfully             | ✅ Pass     |
+| **Authentication Endpoints**    | POST `/dj-rest-auth/registration/`                   | User is registered successfully            | ✅ Pass     |
+|                                 | POST `/dj-rest-auth/login/`                          | User is logged in and token is returned    | ✅ Pass     |
+|                                 | POST `/dj-rest-auth/logout/`                         | User is logged out successfully            | ✅ Pass     |
+|                                 | GET `/current-user-role/`                            | Current user's details are returned        | ✅ Pass     |
 
 ---
 
