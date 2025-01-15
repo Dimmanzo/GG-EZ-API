@@ -225,14 +225,14 @@ Below is a detailed table summarizing manual tests performed for **events**, **m
 
 ## **Code Validation**
 
-All code was tested with **CI Python Linter** to ensure compliance with PEP8 standards. No significant issues were detected.
+All code was tested with **CI Python Linter** to ensure compliance with PEP8 standards. While no significant issues were detected, it is worth noting that some lines exceed 79 characters due to unavoidable long URLs and other similar code elements that cannot be split without breaking functionality.
 
 - **Models**: Verified for consistent naming conventions and clean logic.  
 - **Serializers**: Ensured proper validation and field handling.  
 - **Views**: Checked for proper use of DRF class-based views, query optimizations, and error handling.  
 - **URLs and Permissions**: Confirmed logical routing and secure access control implementation.  
 
-The project meets Python coding standards, ensuring maintainable, clean, and readable code.
+The project meets Python coding standards, ensuring maintainable, clean, and readable code, with a few exceptions where line length restrictions could not be adhered to due to technical limitations.
 
 ---
 
@@ -245,6 +245,47 @@ The project meets Python coding standards, ensuring maintainable, clean, and rea
 - **Heroku**: Deployment platform
 - **Gunicorn**: WSGI server for production
 - **Whitenoise**: Serves static files in production
+
+---
+
+## **Dependencies**
+
+This project uses the following Python dependencies listed in `requirements.txt`:
+
+```
+asgiref==3.8.1                        # ASGI support for Django
+cloudinary==1.41.0                    # Cloudinary integration for media storage
+cryptography==3.4.8                   # Cryptography library for secure operations
+dj-database-url==2.3.0                # Database URL configuration utility for Django
+dj-rest-auth==2.1.9                   # Django authentication for REST APIs
+Django==5.1.3                         # The main Django framework for web development
+django-allauth==0.50.0                # Django authentication system with social login
+django-cloudinary-storage==0.3.0      # Storage backend for Cloudinary in Django
+django-cors-headers==4.6.0            # CORS support for Django applications
+django-filter==24.3                   # Filtering for Django ORM and REST Framework
+django-heroku==0.3.1                  # Heroku-specific settings for Django projects
+djangorestframework==3.15.2           # DRF for building REST APIs with Django
+djangorestframework-simplejwt==5.3.1  # JWT authentication for DRF
+gunicorn==23.0.0                      # WSGI HTTP server for deploying Django apps in production
+oauthlib==3.2.2                       # OAuth1/OAuth2 library for secure authorization
+pillow==11.0.0                        # Imaging library for handling images in Django
+psycopg2==2.9.10                      # PostgreSQL adapter for Python
+psycopg2-binary==2.9.10               # Binary package of psycopg2 for easier installation
+PyJWT==2.10.1                         # JWT library for handling JSON Web Tokens
+python-decouple==3.8                  # Configuration settings from environment variables
+python3-openid==3.2.0                 # OpenID authentication for Django
+pytz==2024.2                          # Timezone library for accurate timezone handling
+requests-oauthlib==2.0.0              # OAuth support for the Requests library
+setuptools==75.6.0                    # Python package installer for distributing code
+sqlparse==0.5.3                       # SQL parsing library for database queries
+whitenoise==6.8.2                     # Static file serving for Django in production
+```
+
+These packages are required for the proper functioning of the backend API. You can install them by running the following command:
+
+```bash
+pip install -r requirements.txt
+```
 
 ---
 
