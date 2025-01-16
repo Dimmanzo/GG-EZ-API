@@ -33,8 +33,11 @@ class PlayerSerializer(serializers.ModelSerializer):
         return value
 
     def validate_avatar(self, value):
-        if not value or value in [None, ""]:
-            return value
+        """
+        Validate the avatar field.
+        """
+        if value in [None, "", "https://res.cloudinary/"]:  # Catch invalid placeholder URL
+            return None  # Allow null/empty values and avoid overwriting
         if isinstance(value, str) and value.startswith("http"):
             return value
         raise serializers.ValidationError(

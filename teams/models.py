@@ -59,12 +59,9 @@ class Player(models.Model):
 
     def save(self, *args, **kwargs):
         """
-        Override save method to set a default avatar if none is provided.
+        Override save method to set a default avatar if none is provided, only on creation.
         """
         self.clean()
-        if not self.avatar:
+        if not self.avatar and not self.pk:  # Only set the default on new instances
             self.avatar = DEFAULT_PLAYER_AVATAR
         super().save(*args, **kwargs)
-
-    def __str__(self):
-        return self.name
