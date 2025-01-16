@@ -51,11 +51,10 @@ class EventSerializer(serializers.ModelSerializer):
         Custom validator for the 'image' field.
         Ensures that the image is either a valid URL or left empty.
         """
-        if isinstance(value, str) and value.startswith("http"):
-            return value  # Accept URLs starting with 'http'
-        if value is None:
-            return value  # Allow null values for the image field
+        if value and isinstance(value, str) and value.startswith("http"):
+            return value  # Accept valid URLs starting with 'http'
+        if value is None or value == "":
+            return None  # Allow null or blank images without error
         raise serializers.ValidationError(
             "Invalid image format. Provide a valid URL."
         )
-        # Raises an error if the input is not a valid URL or empty
