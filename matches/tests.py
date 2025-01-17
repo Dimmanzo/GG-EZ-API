@@ -22,8 +22,14 @@ class MatchModelTestCase(TestCase):
             start_date="2025-01-01",
             end_date="2025-01-10"
         )
-        self.team1 = Team.objects.create(name="Team 1", description="Description 1")
-        self.team2 = Team.objects.create(name="Team 2", description="Description 2")
+        self.team1 = Team.objects.create(
+            name="Team 1",
+            description="Description 1"
+        )
+        self.team2 = Team.objects.create(
+            name="Team 2",
+            description="Description 2"
+        )
 
     def test_valid_match_creation(self):
         """
@@ -75,15 +81,23 @@ class MatchAPITestCase(TestCase):
         self.admin_user = get_user_model().objects.create_superuser(
             username='admin', email='admin@example.com', password='admin123'
         )
-        self.client.force_authenticate(user=self.admin_user)  # Authenticate as admin
+        self.client.force_authenticate(
+            user=self.admin_user
+        )  # Authenticate as admin
         self.event = Event.objects.create(
             name="Test Event",
             description="Test Description",
             start_date="2025-01-01",
             end_date="2025-01-10"
         )
-        self.team1 = Team.objects.create(name="Team 1", description="Description 1")
-        self.team2 = Team.objects.create(name="Team 2", description="Description 2")
+        self.team1 = Team.objects.create(
+            name="Team 1",
+            description="Description 1"
+        )
+        self.team2 = Team.objects.create(
+            name="Team 2",
+            description="Description 2"
+        )
         self.match = Match.objects.create(
             event=self.event,
             team1=self.team1,
@@ -92,8 +106,10 @@ class MatchAPITestCase(TestCase):
             status="upcoming"
         )
         self.matches_url = reverse('matches')
-        self.match_detail_url = reverse('match-detail', kwargs={'pk': self.match.id})
-
+        self.match_detail_url = reverse(
+            'match-detail',
+            kwargs={'pk': self.match.id}
+        )
 
     def test_list_matches(self):
         """

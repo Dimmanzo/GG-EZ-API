@@ -7,6 +7,7 @@ from django.contrib.auth import get_user_model
 
 User = get_user_model()
 
+
 class EventModelTestCase(TestCase):
     """
     Test cases for the Event model.
@@ -22,7 +23,10 @@ class EventModelTestCase(TestCase):
             start_date="2025-01-16",
             end_date="2025-01-17",
         )
-        self.assertEqual(event.image, "https://res.cloudinary.com/dzidcvhig/image/upload/v1734180701/gg-ez/defaults/nou2mptttvfkmdtijdhu.webp")
+        self.assertEqual(
+            event.image,
+            "https://res.cloudinary.com/dzidcvhig/image/upload/v1734180701/gg-ez/defaults/nou2mptttvfkmdtijdhu.webp"
+        )
 
     def test_string_representation(self):
         """
@@ -116,7 +120,9 @@ class EventAPITestCase(TestCase):
             start_date="2025-01-16",
             end_date="2025-01-17",
         )
-        url = reverse('event-detail', kwargs={'pk': event.id})  # Use reverse to construct the URL
+        url = reverse(
+            'event-detail',
+            kwargs={'pk': event.id})  # Use reverse to construct the URL
         data = {
             "name": "Updated Event",
             "description": "Updated description",
