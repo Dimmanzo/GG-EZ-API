@@ -292,7 +292,11 @@ pip install -r requirements.txt
 
 ## **Deployment**
 
-The GG-EZ API is deployed on **Heroku**. Below is a step-by-step guide for deploying the project to Heroku using both the CLI and the Heroku website.
+The **GG-EZ** project consists of two parts:
+- **Backend (this repository)**: Deployed on Heroku as described below.
+- **Frontend**: To make the project fully functional, you will also need to set up the frontend. Follow the deployment instructions for the frontend [here](https://github.com/Dimmanzo/GG-EZ?tab=readme-ov-file#deployment).
+
+Below is a step-by-step guide for deploying the backend to Heroku using both the CLI and the Heroku website.
 
 ---
 
