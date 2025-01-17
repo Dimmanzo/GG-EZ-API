@@ -38,7 +38,9 @@ The main goal of GG-EZ is to provide esports enthusiasts with an accessible, use
 - [User Stories](#user-stories)
 - [Database Schema](#database-schema)
 - [Setup Instructions](#setup-instructions)
+- [Testing](#testing)
 - [Manual Testing](#manual-testing)
+- [Automated Testing](#automated-testing)
 - [Technologies and Tools Used](#technologies-and-tools-used)
 - [Dependencies](#dependencies)
 - [Deployment](#deployment)
@@ -184,6 +186,18 @@ Access the API at `http://127.0.0.1:8000/`.
 
 ---
 
+## **Testing**
+
+The project has undergone comprehensive testing to ensure functionality, reliability, and adherence to coding standards. Three types of testing were conducted:
+
+1. **Manual Testing**: Each feature was manually tested to verify proper behavior under different scenarios. This includes actions such as creating, updating, and deleting events, matches, teams, and players, as well as user authentication and role-based permissions.
+
+2. **Automated Testing**: Unit tests were written and executed for critical functionalities across all apps. These tests ensure that the backend logic behaves as expected, validating models, serializers, and API endpoints.
+
+3. **Code Validation**: The codebase was validated using a Python linter to maintain adherence to PEP8 standards. This ensures the code is clean, maintainable, and free of style-related errors.
+
+---
+
 ### **Manual Testing**
 
 Below is a detailed table summarizing manual tests performed for **events**, **matches**, **teams**, **players**, **users**, and **authentication endpoints**.
@@ -229,6 +243,71 @@ Below is a detailed table summarizing manual tests performed for **events**, **m
 |                                 | GET `/current-user-role/`                            | Current user's details are returned        | ✅ Pass     |
 
 ---
+
+### **Automated Testing**
+
+In addition to manual testing, automated tests were implemented to validate the functionality and reliability of the application. Below is a summary of the automated tests by app.
+
+#### **Events App**
+- **Models**:
+  - Verify default image assignment when no image is provided.
+  - Ensure validation prevents invalid date ranges (e.g., end date before start date).
+- **Views**:
+  - Test creating, listing, updating, and deleting events.
+  - Ensure proper access control for admin-only actions.
+- **Serializers**:
+  - Confirm validation for event name, description, and image URL.
+
+#### **Matches App**
+- **Models**:
+  - Validate scheduled time is not in the past.
+  - Ensure two different teams are required for a match.
+- **Views**:
+  - Test CRUD operations for matches.
+  - Verify filtering and search functionality.
+- **Serializers**:
+  - Test validation for teams, scheduled time, and match status.
+
+#### **Teams App**
+- **Models**:
+  - Verify default logo is assigned to teams and players if none is provided.
+  - Validate that team names and descriptions meet length requirements.
+  - Confirm player roles and names cannot be empty.
+- **Views**:
+  - Test creating, listing, and updating teams and players.
+  - Ensure proper permissions for restricted actions.
+- **Serializers**:
+  - Confirm validation for player avatars, team logos, and associated relationships.
+
+#### **Users App**
+- **Models**:
+  - Validate default user roles are correctly assigned.
+- **Views**:
+  - Test user registration with valid and invalid inputs.
+  - Verify current user details are returned for authenticated users.
+- **Serializers**:
+  - Test validation for email, password strength, and password confirmation during registration.
+
+---
+
+### **Automated Test Execution**
+
+To run all tests:
+```bash
+python manage.py test
+```
+
+To run tests for a specific app:
+```bash
+python manage.py test <app_name>
+```
+
+For example:
+```bash
+python manage.py test teams
+```
+
+--- 
 
 ## **Code Validation**
 
