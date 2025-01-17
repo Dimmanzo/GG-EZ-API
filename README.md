@@ -23,6 +23,12 @@ This backend API supports:
 
 ---
 
+## **Goals of the Project**
+
+The main goal of GG-EZ is to provide esports enthusiasts with an accessible, user-friendly platform to explore and stay updated on events, matches, teams, and players. This project also aims to offer administrators an efficient way to manage data through a responsive and modern interface. By combining a robust backend API and an interactive frontend, GG-EZ ensures a seamless experience for users and staff alike.
+
+---
+
 ## **Table of Contents**
 
 - [Project Rationale](#project-rationale)
