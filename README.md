@@ -7,7 +7,7 @@
 ## **Project Rationale**
 
 GG-EZ is a powerful esports event tracker designed to simplify the way users follow esports tournaments, matches, teams, and players.  
-This project serves as the backend API for the GG-EZ platform, handling all event-related data and user interactions.
+This project serves as the backend API for the [GG-EZ platform](https://github.com/Dimmanzo/GG-EZ), handling all event-related data and user interactions.
 
 The API is secure, scalable, and built with **Django** and **Django REST Framework**, enabling the frontend to fetch, update, and manage information seamlessly.
 
