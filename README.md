@@ -13,22 +13,6 @@ The API is secure, scalable, and built with **Django** and **Django REST Framewo
 
 ---
 
-## **Overview**
-
-This backend API supports:
-- **Event Management**: Manage details of esports tournaments and matches.
-- **Team and Player Data**: Retrieve team profiles and **player statistics** - (Future feature).
-- **User Roles**: Admin users can create and modify events, while general users can browse event data.
-- **Search and Filter**: Easily find specific events or teams using filters and keywords.
-
----
-
-## **Goals of the Project**
-
-The main goal of GG-EZ is to provide esports enthusiasts with an accessible, user-friendly platform to explore and stay updated on events, matches, teams, and players. This project also aims to offer administrators an efficient way to manage data through a responsive and modern interface. By combining a robust backend API and an interactive frontend, GG-EZ ensures a seamless experience for users and staff alike.
-
----
-
 ## **Table of Contents**
 
 - [Project Rationale](#project-rationale)
@@ -48,6 +32,22 @@ The main goal of GG-EZ is to provide esports enthusiasts with an accessible, use
 - [Api Endpoints](#api-endpoints)
 - [Credits](#credits)
 
+
+---
+
+## **Overview**
+
+This backend API supports:
+- **Event Management**: Manage details of esports tournaments and matches.
+- **Team and Player Data**: Retrieve team profiles and **player statistics** - (Future feature).
+- **User Roles**: Admin users can create and modify events, while general users can browse event data.
+- **Search and Filter**: Easily find specific events or teams using filters and keywords.
+
+---
+
+## **Goals of the Project**
+
+The main goal of GG-EZ is to provide esports enthusiasts with an accessible, user-friendly platform to explore and stay updated on events, matches, teams, and players. This project also aims to offer administrators an efficient way to manage data through a responsive and modern interface. By combining a robust backend API and an interactive frontend, GG-EZ ensures a seamless experience for users and staff alike.
 
 ---
 
